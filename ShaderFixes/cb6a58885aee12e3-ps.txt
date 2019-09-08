@@ -1,0 +1,2137 @@
+// asmtool.py -I ../.. --fix-unity-reflection --only-autofixed cb6a58885aee12e3-ps.txt
+// 3DMigoto: cb6a58885aee12e3 |    Unity headers extracted from Relief Pack_ReliefTerrain-FirstPass
+//    Shader "Relief Pack/ReliefTerrain-FirstPass" {
+//      Fallback "Nature/Terrain/Standard"
+//      SubShader 1/1 {
+//        Tags { "QUEUE"="Geometry-100" "RenderType"="Opaque" }
+//        Pass 2/6 {
+//          Name "FORWARD"
+//          Tags { "LIGHTMODE"="FORWARDADD" "QUEUE"="Geometry-100" "RenderType"="Opaque" "SHADOWSUPPORT"="true" }
+//          ZWrite Off
+//          Program "fp" {
+//            SubProgram "d3d11" {
+//            }
+//          }
+//        }
+//      }
+//    }
+//
+// Unity 5.3 headers extracted from Relief Pack_ReliefTerrain-FirstPass:
+//   API d3d11
+//   Shader model ps_4_0
+//   undeciphered1: 201802150 1566 9 47
+//   undeciphered1a: 29
+//   Keywords { "POINT_COOKIE" "FOG_LINEAR" "RTP_POM_SHADING_MED" }
+//   undeciphered2: 1 19 6 10 0 0
+//   undeciphered3: 0 0
+//   ConstBuffer "$Globals" 240
+//   Vector 32 [_LightColor0]
+//   Vector 64 [RTP_ColorSpaceDielectricSpecTint] 3
+//   Matrix 80 [unity_WorldToLight]
+//   ConstBuffer "UnityPerCamera" 144
+//   Vector 0 [_Time]
+//   Vector 64 [_WorldSpaceCameraPos] 3
+//   ConstBuffer "UnityLighting" 768
+//   Vector 0 [_WorldSpaceLightPos0]
+//   Vector 736 [unity_OcclusionMaskSelector]
+//   ConstBuffer "UnityFog" 32
+//   Vector 16 [unity_FogParams]
+//   ConstBuffer "UnityProbeVolume" 112
+//   Vector 0 [unity_ProbeVolumeParams]
+//   Vector 80 [unity_ProbeVolumeSizeInv] 3
+//   Vector 96 [unity_ProbeVolumeMin] 3
+//   Matrix 16 [unity_ProbeVolumeWorldToObject]
+//   ConstBuffer "rtpConstants" 2960
+//   Float 24 [_BumpMapGlobalScale]
+//   Vector 32 [_GlobalColorMapBlendValues] 3
+//   Float 44 [_GlobalColorMapSaturation]
+//   Float 48 [_GlobalColorMapSaturationFar]
+//   Float 52 [_GlobalColorMapBrightness]
+//   Float 56 [_GlobalColorMapBrightnessFar]
+//   Float 60 [_GlobalColorMapNearMIP]
+//   Float 64 [_GlobalColorMapDistortByPerlin]
+//   Vector 144 [_GlobalColorPerLayer0123]
+//   Vector 160 [_GlobalColorPerLayer4567]
+//   Vector 176 [_LayerBrightness0123]
+//   Vector 192 [_LayerSaturation0123]
+//   Vector 240 [_LayerBrightness4567]
+//   Vector 256 [_LayerSaturation4567]
+//   Vector 976 [_FarSpecCorrection0123]
+//   Vector 992 [_FarSpecCorrection4567]
+//   Vector 1008 [_MIPmult0123]
+//   Vector 1024 [_MIPmult4567]
+//   Vector 1040 [_TERRAIN_HeightMap_TexelSize]
+//   Vector 1056 [_TERRAIN_HeightMap2_TexelSize]
+//   Vector 1072 [_SplatAtlasA_TexelSize]
+//   Vector 1136 [_TERRAIN_ReliefTransform]
+//   Float 1156 [_TERRAIN_DIST_STEPS]
+//   Float 1160 [_TERRAIN_WAVELENGTH]
+//   Float 1172 [_TERRAIN_ExtrudeHeight]
+//   Float 1180 [_TERRAIN_SHADOW_STEPS]
+//   Float 1184 [_TERRAIN_WAVELENGTH_SHADOWS]
+//   Float 1188 [_TERRAIN_SelfShadowStrength]
+//   Float 1200 [rtp_mipoffset_color]
+//   Float 1204 [rtp_mipoffset_bump]
+//   Float 1208 [rtp_mipoffset_height]
+//   Float 1212 [rtp_mipoffset_superdetail]
+//   Float 1216 [rtp_mipoffset_flow]
+//   Float 1220 [rtp_mipoffset_ripple]
+//   Float 1224 [rtp_mipoffset_globalnorm]
+//   Vector 1296 [TERRAIN_CausticsMaskWorld2UV]
+//   Float 1312 [TERRAIN_PuddleLevel]
+//   Float 1344 [TERRAIN_GlobalWetness]
+//   Float 1376 [TERRAIN_RippleScale]
+//   Float 1380 [TERRAIN_FlowScale]
+//   Float 1384 [TERRAIN_FlowSpeed]
+//   Float 1388 [TERRAIN_FlowCycleScale]
+//   Float 1396 [TERRAIN_RainIntensity]
+//   Float 1404 [TERRAIN_DropletsSpeed]
+//   Float 1408 [TERRAIN_WetDarkening]
+//   Float 1412 [TERRAIN_WetDropletsStrength]
+//   Float 1416 [TERRAIN_WetHeight_Treshold]
+//   Float 1420 [TERRAIN_WetHeight_Transition]
+//   Float 1424 [TERRAIN_mipoffset_flowSpeed]
+//   Vector 1440 [TERRAIN_LayerWetStrength0123]
+//   Vector 1456 [TERRAIN_LayerWetStrength4567]
+//   Vector 1472 [TERRAIN_WaterLevel0123]
+//   Vector 1488 [TERRAIN_WaterLevel4567]
+//   Vector 1504 [TERRAIN_WaterLevelSlopeDamp0123]
+//   Vector 1520 [TERRAIN_WaterLevelSlopeDamp4567]
+//   Vector 1536 [TERRAIN_WaterEdge0123]
+//   Vector 1552 [TERRAIN_WaterEdge4567]
+//   Vector 1568 [TERRAIN_Refraction0123]
+//   Vector 1584 [TERRAIN_Refraction4567]
+//   Vector 1600 [TERRAIN_WetRefraction0123]
+//   Vector 1616 [TERRAIN_WetRefraction4567]
+//   Vector 1632 [TERRAIN_Flow0123]
+//   Vector 1648 [TERRAIN_Flow4567]
+//   Vector 1664 [TERRAIN_WetFlow0123]
+//   Vector 1680 [TERRAIN_WetFlow4567]
+//   Vector 1696 [TERRAIN_WetGloss0123]
+//   Vector 1712 [TERRAIN_WetGloss4567]
+//   Vector 1728 [TERRAIN_WaterMetallic0123]
+//   Vector 1744 [TERRAIN_WaterMetallic4567]
+//   Vector 1760 [TERRAIN_WaterGloss0123]
+//   Vector 1776 [TERRAIN_WaterGloss4567]
+//   Vector 1792 [TERRAIN_WaterGlossDamper0123]
+//   Vector 1808 [TERRAIN_WaterGlossDamper4567]
+//   Vector 1856 [TERRAIN_WaterColorR0123]
+//   Vector 1872 [TERRAIN_WaterColorR4567]
+//   Vector 1888 [TERRAIN_WaterColorG0123]
+//   Vector 1904 [TERRAIN_WaterColorG4567]
+//   Vector 1920 [TERRAIN_WaterColorB0123]
+//   Vector 1936 [TERRAIN_WaterColorB4567]
+//   Vector 1952 [TERRAIN_WaterColorA0123]
+//   Vector 1968 [TERRAIN_WaterColorA4567]
+//   Float 2060 [_TERRAIN_distance_start]
+//   Float 2064 [_TERRAIN_distance_transition]
+//   Float 2068 [_TERRAIN_distance_start_bumpglobal]
+//   Float 2072 [_TERRAIN_distance_transition_bumpglobal]
+//   Float 2076 [rtp_perlin_start_val]
+//   Vector 2080 [_BumpMapGlobalStrength0123]
+//   Vector 2096 [_BumpMapGlobalStrength4567]
+//   Float 2192 [_RTP_MIP_BIAS]
+//   Float 2240 [_SuperDetailTiling]
+//   Vector 2320 [_SuperDetailStrengthNormal0123]
+//   Vector 2336 [_SuperDetailStrengthNormal4567]
+//   Vector 2768 [RTP_metallic0123]
+//   Vector 2784 [RTP_metallic4567]
+//   Vector 2800 [RTP_glossMin0123]
+//   Vector 2816 [RTP_glossMin4567]
+//   Vector 2832 [RTP_glossMax0123]
+//   Vector 2848 [RTP_glossMax4567]
+//   Vector 2864 [RTP_DiffFresnel0123]
+//   Vector 2880 [RTP_DiffFresnel4567]
+//   Vector 2912 [RTP_AO_0123]
+//   Float 2948 [CJ_flattenShadows]
+//   SetTexture 0 [_LightTextureB0] 2D 2
+//   SetTexture 1 [_LightTexture0] CUBE 1
+//   SetTexture 2 [unity_ProbeVolumeSH] 3D 0
+//   SetTexture 3 [_Control1] 2D 3
+//   SetTexture 4 [_Control2] 2D -1
+//   SetTexture 5 [_SplatAtlasA] 2D 4
+//   SetTexture 6 [_SplatAtlasB] 2D -1
+//   SetTexture 7 [_BumpMap01] 2D 5
+//   SetTexture 8 [_BumpMap23] 2D -1
+//   SetTexture 9 [_BumpMap45] 2D -1
+//   SetTexture 10 [_BumpMap67] 2D -1
+//   SetTexture 11 [_ColorMapGlobal] 2D 6
+//   SetTexture 12 [_BumpMapGlobal] 2D 7
+//   SetTexture 13 [_TERRAIN_HeightMap] 2D 8
+//   SetTexture 14 [_TERRAIN_HeightMap2] 2D -1
+//   SetTexture 15 [TERRAIN_CausticsMask] 2D -1
+//   SetTexture 16 [TERRAIN_PuddleMask] 2D -1
+//   SetTexture 17 [TERRAIN_WetMask] 2D -1
+//   SetTexture 18 [TERRAIN_RippleMap] 2D 9
+//   BindCB "$Globals" 0
+//   BindCB "UnityPerCamera" 1
+//   BindCB "UnityLighting" 2
+//   BindCB "UnityFog" 3
+//   BindCB "UnityProbeVolume" 4
+//   BindCB "rtpConstants" 5
+//
+// Headers extracted with DarkStarSword's extract_unity55_shaders.py
+// https://github.com/DarkStarSword/3d-fixes
+
+//
+// Generated by Microsoft (R) D3D Shader Disassembler
+//
+//   using 3Dmigoto v1.3.16 on Sat Sep 07 10:11:09 2019
+//
+//
+// Input signature:
+//
+// Name                 Index   Mask Register SysValue  Format   Used
+// -------------------- ----- ------ -------- -------- ------- ------
+// SV_POSITION              0   xyzw        0      POS   float
+// TEXCOORD                 0   xy          1     NONE   float   xy
+// TEXCOORD                 1   xyz         2     NONE   float   xyz
+// TEXCOORD                 2   xyz         3     NONE   float   xyz
+// TEXCOORD                 3   xyz         4     NONE   float   xyz
+// TEXCOORD                 4   xyz         5     NONE   float   xyz
+// COLOR                    0   xyzw        6     NONE   float   xyz
+// TEXCOORD                 5   xyz         7     NONE   float
+// TEXCOORD                 6   xyzw        8     NONE   float
+//
+//
+// Output signature:
+//
+// Name                 Index   Mask Register SysValue  Format   Used
+// -------------------- ----- ------ -------- -------- ------- ------
+// SV_Target                0   xyzw        0   TARGET   float   xyzw
+//
+ps_4_0
+dcl_constantbuffer cb0[9], immediateIndexed
+dcl_constantbuffer cb1[9], immediateIndexed
+dcl_constantbuffer cb2[47], immediateIndexed
+dcl_constantbuffer cb3[2], immediateIndexed
+dcl_constantbuffer cb4[7], immediateIndexed
+dcl_constantbuffer cb5[185], immediateIndexed
+dcl_sampler s0, mode_default
+dcl_sampler s1, mode_default
+dcl_sampler s2, mode_default
+dcl_sampler s3, mode_default
+dcl_sampler s4, mode_default
+dcl_sampler s5, mode_default
+dcl_sampler s6, mode_default
+dcl_sampler s7, mode_default
+dcl_sampler s8, mode_default
+dcl_sampler s9, mode_default
+dcl_resource_texture2d (float,float,float,float) t0
+dcl_resource_texturecube (float,float,float,float) t1
+dcl_resource_texture3d (float,float,float,float) t2
+dcl_resource_texture2d (float,float,float,float) t3
+dcl_resource_texture2d (float,float,float,float) t4
+dcl_resource_texture2d (float,float,float,float) t5
+dcl_resource_texture2d (float,float,float,float) t6
+dcl_resource_texture2d (float,float,float,float) t7
+dcl_resource_texture2d (float,float,float,float) t8
+dcl_resource_texture2d (float,float,float,float) t9
+dcl_resource_texture2d (float,float,float,float) t10
+dcl_resource_texture2d (float,float,float,float) t11
+dcl_resource_texture2d (float,float,float,float) t12
+dcl_resource_texture2d (float,float,float,float) t13
+dcl_resource_texture2d (float,float,float,float) t14
+dcl_resource_texture2d (float,float,float,float) t15
+dcl_resource_texture2d (float,float,float,float) t16
+dcl_resource_texture2d (float,float,float,float) t17
+dcl_resource_texture2d (float,float,float,float) t18
+dcl_input_ps linear v1.xy
+dcl_input_ps linear v2.xyz
+dcl_input_ps linear v3.xyz
+dcl_input_ps linear v4.xyz
+dcl_input_ps linear v5.xyz
+dcl_input_ps linear v6.xyz
+dcl_output o0.xyzw
+dcl_temps 31
+dcl_constantbuffer cb10[4], immediateIndexed
+
+// 3DMigoto StereoParams:
+dcl_resource_texture2d (float,float,float,float) t125
+
+ld_indexable(texture2d)(float,float,float,float) r29.xyzw, l(0, 0, 0, 0), t125.xyzw
+
+
+// Unity reflection/specular fix inserted with DarkStarSword's asmtool.py:
+// asmtool.py -I ../.. --fix-unity-reflection --only-autofixed cb6a58885aee12e3-ps.txt
+
+mul r29.w, -r29.x, r29.y
+mad r30.xyz, -r29.wwww, cb10[0].xyzw, cb1[4].xyzw
+
+add r0.xyz, -v5.xyzx, cb2[0].xyzx
+dp3 r0.w, r0.xyzx, r0.xyzx
+rsq r0.w, r0.w
+mul r1.xyz, r0.wwww, r0.xyzx
+add r2.xyz, -v5.xyzx, r30.xyzx
+dp3 r1.w, r2.xyzx, r2.xyzx
+rsq r2.w, r1.w
+mul r2.xyz, r2.wwww, r2.xyzx
+sqrt r1.w, r1.w
+sample r3.xyzw, v1.xyxx, t3.xyzw, s3
+dp4 r2.w, r3.xyzw, l(1.000000, 1.000000, 1.000000, 1.000000)
+sample r4.xyzw, v1.xyxx, t4.xyzw, s3
+dp4 r5.x, r4.xyzw, l(1.000000, 1.000000, 1.000000, 1.000000)
+add r2.w, r2.w, r5.x
+ge r2.w, r2.w, l(0.001000)
+if_nz r2.w
+  mul r5.xyz, r2.yyyy, v3.xyzx
+  mad r5.xyz, v2.xyzx, r2.xxxx, r5.xyzx
+  mad r5.xyz, v4.xyzx, r2.zzzz, r5.xyzx
+  div r6.xy, v5.xzxx, cb5[71].xyxx
+  add r6.xy, r6.xyxx, cb5[71].zwzz
+  mul r2.w, cb5[137].x, l(-0.666666687)
+  exp r2.w, r2.w
+  deriv_rtx r6.zw, r6.xxxy
+  div r6.zw, r6.zzzw, r2.wwww
+  deriv_rty r7.xy, r6.xyxx
+  div r7.xy, r7.xyxx, r2.wwww
+  mul r8.xyzw, r6.xyxy, l(1024.000000, 1024.000000, 0.062500, 0.062500)
+  add r2.w, cb5[137].x, l(1.000000)
+  mul r7.zw, r2.wwww, r8.xxxy
+  deriv_rtx r8.xy, r7.zwzz
+  deriv_rty r7.zw, r7.zzzw
+  add r2.w, r1.w, -cb5[129].y
+  div_sat r2.w, r2.w, cb5[129].z
+  add r5.w, r1.w, -cb5[128].w
+  div_sat r5.w, r5.w, cb5[129].x
+  add r5.w, -r5.w, l(1.000000)
+  dp2 r8.x, r8.xyxx, r8.xyxx
+  dp2 r7.z, r7.zwzz, r7.zwzz
+  max r7.z, r7.z, r8.x
+  log r7.z, r7.z
+  mul r8.xy, r6.xyxx, cb5[1].zzzz
+  mad r7.w, r7.z, l(0.500000), cb5[76].z
+  sample_l r9.xyzw, r8.xyxx, t12.xyzw, s7, r7.w
+  mul r8.xy, r8.xyxx, l(8.000000, 8.000000, 0.000000, 0.000000)
+  add r7.w, r7.w, l(3.000000)
+  sample_l r10.xyzw, r8.xyxx, t12.xyzw, s7, r7.w
+  mul r8.xy, r10.xyxx, l(0.400000, 0.400000, 0.000000, 0.000000)
+  mad r8.xy, r9.xyxx, l(0.600000, 0.600000, 0.000000, 0.000000), r8.xyxx
+  dp3 r7.w, r5.xyzx, r5.xyzx
+  sqrt r7.w, r7.w
+  max r7.w, r7.w, l(0.000100)
+  div r9.xyz, r5.xyzx, r7.wwww
+  mov_sat r9.w, r9.z
+  mul r5.x, r5.w, r5.w
+  add r5.y, -cb5[2].y, cb5[2].x
+  mad r5.x, r5.x, r5.y, cb5[2].y
+  add r5.y, -r5.x, cb5[2].z
+  mad r5.x, r2.w, r5.y, r5.x
+  add r5.yz, r8.xxyx, l(0.000000, -0.500000, -0.500000, 0.000000)
+  mad r5.yz, r5.yyzy, cb5[4].xxxx, v1.xxyx
+  sample r10.xyzw, r5.yzyy, t11.xyzw, s6
+  sample_l r11.xyzw, r5.yzyy, t11.xyzw, s6, cb5[3].w
+  add r10.xyzw, r10.xyzw, -r11.xyzw
+  mad r10.xyzw, r2.wwww, r10.xyzw, r11.xyzw
+  add r5.y, -cb5[2].w, cb5[3].x
+  mad r5.y, r2.w, r5.y, cb5[2].w
+  dp3 r5.z, r10.xyzx, l(0.350000, 0.350000, 0.350000, 0.000000)
+  add r10.xyz, -r5.zzzz, r10.xyzx
+  mad r10.xyz, r5.yyyy, r10.xyzx, r5.zzzz
+  add r5.y, -cb5[3].y, cb5[3].z
+  mad r5.y, r2.w, r5.y, cb5[3].y
+  sample_d r11.xyzw, r6.xyxx, t13.xyzw, s8, r6.zwzz, r7.xyxx
+  add_sat r11.xyzw, r11.xyzw, l(0.001000, 0.001000, 0.001000, 0.001000)
+  mul r3.xyzw, r3.xyzw, r11.xyzw
+  mul r3.xyzw, r3.xyzw, r3.xyzw
+  sample_d r12.xyzw, r6.xyxx, t14.xyzw, s8, r6.zwzz, r7.xyxx
+  add_sat r12.xyzw, r12.xyzw, l(0.001000, 0.001000, 0.001000, 0.001000)
+  mul r4.xyzw, r4.xyzw, r12.xyzw
+  mul r4.xyzw, r4.xyzw, r4.xyzw
+  dp4 r5.z, r3.xyzw, l(1.000000, 1.000000, 1.000000, 1.000000)
+  dp4 r7.w, r4.xyzw, l(1.000000, 1.000000, 1.000000, 1.000000)
+  add r5.z, r5.z, r7.w
+  div r3.xyzw, r3.xyzw, r5.zzzz
+  div r4.xyzw, r4.xyzw, r5.zzzz
+  mul r13.xyzw, r3.xyzw, r3.xyzw
+  mul r14.xyzw, r4.xyzw, r4.xyzw
+  dp4 r5.z, r13.xyzw, l(1.000000, 1.000000, 1.000000, 1.000000)
+  dp4 r7.w, r14.xyzw, l(1.000000, 1.000000, 1.000000, 1.000000)
+  add r5.z, r5.z, r7.w
+  div r13.xyzw, r13.xyzw, r5.zzzz
+  div r14.xyzw, r14.xyzw, r5.zzzz
+  add r13.xyzw, -r3.xyzw, r13.xyzw
+  mad r3.xyzw, r5.wwww, r13.xyzw, r3.xyzw
+  add r13.xyzw, -r4.xyzw, r14.xyzw
+  mad r4.xyzw, r5.wwww, r13.xyzw, r4.xyzw
+  dp4 r5.z, r3.xyzw, l(1.000000, 1.000000, 1.000000, 1.000000)
+  dp4 r7.w, r4.xyzw, l(1.000000, 1.000000, 1.000000, 1.000000)
+  dp4 r9.z, r3.xyzw, r11.xyzw
+  dp4 r11.x, r4.xyzw, r12.xyzw
+  add r9.z, r9.z, r11.x
+  mul r11.x, r9.w, l(-8.656200)
+  exp r11.x, r11.x
+  mad r11.y, r7.z, l(0.500000), cb5[75].x
+  add r11.z, r11.y, l(-4.000000)
+  mad r11.z, r2.w, l(2.000000), r11.z
+  sample_l r12.xyzw, r8.zwzz, t12.xyzw, s7, r11.z
+  add r8.z, -v3.z, l(1.000000)
+  mad r8.w, r12.x, l(0.500000), l(0.500000)
+  mul r8.w, r8.w, cb5[88].w
+  add r11.z, -v5.y, cb5[88].z
+  mad r11.z, -r8.w, l(0.500000), r11.z
+  div_sat r8.w, r11.z, r8.w
+  add r11.zw, v5.xxxz, -cb5[81].xxxy
+  add r12.yz, -cb5[81].xxyx, cb5[81].zzwz
+  div r11.zw, r11.zzzw, r12.yyyz
+  sample r13.xyzw, r11.zwzz, t15.xyzw, s6
+  sample r14.xyzw, r11.zwzz, t16.xyzw, s6
+  mul r12.y, r14.w, cb5[82].x
+  sample r14.xyzw, r11.zwzz, t17.xyzw, s6
+  add r11.z, -r13.w, l(1.000000)
+  mad r13.xy, r8.xyxx, l(3.000000, 3.000000, 0.000000, 0.000000), l(-1.500000, -1.500000, 0.000000, 0.000000)
+  dp2 r8.x, r13.xyxx, r13.xyxx
+  min r8.x, r8.x, l(1.000000)
+  add r8.x, -r8.x, l(1.000000)
+  sqrt r8.x, r8.x
+  lt r8.y, l(0.000000), r5.w
+  if_nz r8.y
+    mov r14.x, v4.z
+    mov r14.y, v2.z
+    mov r14.z, v3.z
+    mul r15.xyz, r14.xyzx, l(1.000000, 0.000000, 0.000100, 0.000000)
+    mad r15.xyz, r14.yzxy, l(0.000100, 1.000000, 0.000000, 0.000000), -r15.xyzx
+    mul r16.xyz, r14.xyzx, r15.xyzx
+    mad r14.xyz, r14.zxyz, r15.yzxy, -r16.xyzx
+    dp3 r8.y, r14.xyzx, r14.xyzx
+    sqrt r8.y, r8.y
+    max r8.y, r8.y, l(0.000100)
+    div r15.xyz, r14.xyzx, r8.yyyy
+    mul r8.y, r15.z, v2.z
+    mad r8.y, v4.z, r15.x, -r8.y
+    mov r15.w, -r8.y
+    mul r8.y, cb5[67].x, l(16.000000)
+    mad r11.w, cb5[67].x, l(-32.000000), l(0.500000)
+    min r12.z, r11.y, l(6.000000)
+    exp r12.w, r12.z
+    mul r13.w, r12.w, cb5[67].x
+    mad r11.w, -r12.w, cb5[67].x, r11.w
+    mad r8.y, r13.w, l(0.500000), r8.y
+    mad r12.w, r7.z, l(0.500000), cb5[75].z
+    max r12.w, r12.w, l(0.000000)
+    min r12.w, r12.w, l(6.000000)
+    mov r16.xyz, -r9.xywx
+    add r9.x, r16.z, l(1.000000)
+    mul r9.x, r9.x, r9.x
+    mul r9.y, r10.w, cb5[73].y
+    mul r9.w, r5.w, r9.y
+    mad r9.x, -r9.x, r9.x, l(1.000000)
+    mul r9.x, r9.x, r9.w
+    max r9.x, r9.x, l(0.001000)
+    div r16.w, r16.z, r9.x
+    exp r9.x, r12.w
+    mul r9.x, r9.x, cb5[65].x
+    mul r9.x, r9.x, cb5[72].z
+    dp2 r9.w, r16.xyxx, r16.xyxx
+    sqrt r9.w, r9.w
+    div r9.x, r9.x, r9.w
+    mul r14.xyz, r9.xxxx, r16.xywx
+    lt r9.w, l(0.010000), r5.z
+    lt r13.w, l(0.010000), r7.w
+    and r9.w, r9.w, r13.w
+    if_nz r9.w
+      lt r9.w, l(0.000000), r10.w
+      if_nz r9.w
+        mov r17.xy, r6.xyxx
+        mov r17.z, l(1.000000)
+        mov r9.w, l(0)
+        mov r13.w, l(0)
+        mov r15.xz, l(1.001000,0,0,0)
+        mov r16.z, l(0)
+        loop
+          itof r17.w, r16.z
+          ge r17.w, r17.w, cb5[72].y
+          breakc_nz r17.w
+          mad r18.xyz, r16.xywx, r9.xxxx, r17.xyzx
+          sample_l r19.xyzw, r18.xyxx, t13.xyzw, s8, r12.w
+          sample_l r20.xyzw, r18.xyxx, t14.xyzw, s8, r12.w
+          dp4 r17.w, r3.xyzw, r19.xyzw
+          dp4 r18.w, r4.xyzw, r20.xyzw
+          add_sat r17.w, r17.w, r18.w
+          ge r18.w, r17.w, r18.z
+          if_nz r18.w
+            mov r17.xyz, r18.xyzx
+            mov r9.w, l(-1)
+            mov r15.z, r17.w
+            break
+          endif
+          add r13.w, -r17.w, r18.z
+          mov r15.x, r17.w
+          iadd r16.z, r16.z, l(1)
+          mov r17.xyz, r18.xyzx
+          mov r9.w, r18.w
+          mov r15.z, r17.w
+        endloop
+      else
+        mov r17.xy, r6.xyxx
+        mov r17.z, l(1.000000)
+        mov r9.w, l(0)
+        mov r13.w, l(0)
+        mov r15.xz, l(1.001000,0,0,0)
+      endif
+      if_nz r9.w
+        add r9.w, -r15.x, r15.z
+        mad r9.w, -r16.w, r9.x, r9.w
+        div r9.w, r13.w, r9.w
+        add r16.z, -r9.w, l(1.000000)
+        mul r18.xyz, r14.xyzx, r16.zzzz
+        mad r19.xyz, -r14.xyzx, r16.zzzz, r17.xyzx
+        sample_l r20.xyzw, r19.xyxx, t13.xyzw, s8, r12.w
+        sample_l r21.xyzw, r19.xyxx, t14.xyzw, s8, r12.w
+        dp4 r17.w, r3.xyzw, r20.xyzw
+        dp4 r18.w, r4.xyzw, r21.xyzw
+        add_sat r17.w, r17.w, r18.w
+        ge r18.w, r17.w, r19.z
+        mul r20.xyz, r9.wwww, r14.xyzx
+        add r15.x, -r15.x, r17.w
+        mad r9.w, -r14.z, r9.w, r15.x
+        div r9.w, r13.w, r9.w
+        add r9.w, -r9.w, l(1.000000)
+        mad r20.xyz, -r20.xyzx, r9.wwww, r19.xyzx
+        add r9.w, -r17.w, r19.z
+        add r13.w, r15.z, -r17.w
+        mad r13.w, -r14.z, r16.z, r13.w
+        div r9.w, r9.w, r13.w
+        mad r18.xyz, r18.xyzx, r9.wwww, r19.xyzx
+        movc r17.xyz, r18.wwww, r20.xyzx, r18.xyzx
+      endif
+      dp4 r9.w, r3.xyzw, cb5[90].xyzw
+      dp4 r13.w, r4.xyzw, cb5[91].xyzw
+      add r9.w, r9.w, r13.w
+      add r13.w, -r14.w, l(1.000000)
+      mad r15.x, -r9.w, cb5[84].x, l(1.000000)
+      mad r15.x, -r12.x, r15.x, r13.w
+      add_sat r15.x, r15.x, r15.x
+      mul r15.x, r15.x, cb5[84].x
+      mul r9.w, r9.w, r15.x
+      lt r15.x, l(0.000000), r9.w
+      lt r15.z, l(0.000000), r12.y
+      or r15.x, r15.z, r15.x
+      if_nz r15.x
+        add r15.x, -r9.z, r17.z
+        mad r15.x, r5.w, r15.x, r9.z
+        dp4 r15.z, r3.xyzw, cb5[92].xyzw
+        dp4 r16.z, r4.xyzw, cb5[93].xyzw
+        add r15.z, r15.z, r16.z
+        add r16.z, -r8.w, l(1.000000)
+        mul r15.z, r15.z, r16.z
+        dp4 r16.z, r3.xyzw, cb5[94].xyzw
+        dp4 r17.w, r4.xyzw, cb5[95].xyzw
+        add r16.z, r16.z, r17.w
+        dp4 r17.w, r3.xyzw, cb5[102].xyzw
+        dp4 r18.x, r4.xyzw, cb5[103].xyzw
+        add r17.w, r17.w, r18.x
+        dp4 r18.x, r3.xyzw, cb5[104].xyzw
+        dp4 r18.y, r4.xyzw, cb5[105].xyzw
+        add r18.x, r18.y, r18.x
+        dp4 r18.y, r3.xyzw, cb5[96].xyzw
+        dp4 r18.z, r4.xyzw, cb5[97].xyzw
+        add r18.y, r18.z, r18.y
+        dp4 r18.z, r3.xyzw, cb5[98].xyzw
+        dp4 r18.w, r4.xyzw, cb5[99].xyzw
+        add r18.z, r18.w, r18.z
+        dp4 r18.w, r3.xyzw, cb5[100].xyzw
+        dp4 r19.x, r4.xyzw, cb5[101].xyzw
+        add r18.w, r18.w, r19.x
+        dp4 r19.x, r3.xyzw, cb5[106].xyzw
+        dp4 r19.y, r4.xyzw, cb5[107].xyzw
+        dp4 r19.z, r3.xyzw, cb5[112].xyzw
+        dp4 r19.w, r4.xyzw, cb5[113].xyzw
+        add r19.xz, r19.yywy, r19.xxzx
+        dp4 r19.w, r3.xyzw, cb5[110].xyzw
+        dp4 r20.x, r4.xyzw, cb5[111].xyzw
+        add r19.y, r19.w, r20.x
+        dp4 r19.w, r3.xyzw, cb5[116].xyzw
+        dp4 r20.x, r4.xyzw, cb5[117].xyzw
+        add r20.x, r19.w, r20.x
+        dp4 r19.w, r3.xyzw, cb5[118].xyzw
+        dp4 r20.w, r4.xyzw, cb5[119].xyzw
+        add r20.y, r19.w, r20.w
+        dp4 r19.w, r3.xyzw, cb5[120].xyzw
+        dp4 r20.w, r4.xyzw, cb5[121].xyzw
+        add r20.z, r19.w, r20.w
+        dp4 r19.w, r3.xyzw, cb5[122].xyzw
+        dp4 r20.w, r4.xyzw, cb5[123].xyzw
+        add r19.w, r19.w, r20.w
+        mul_sat r16.z, r8.z, r16.z
+        mad_sat r20.w, r9.w, l(6.000000), l(-1.000000)
+        mad r21.x, -r16.z, l(4.000000), l(1.000000)
+        max r21.x, r21.x, l(0.000000)
+        mul r20.w, r20.w, r21.x
+        mul r20.w, r5.w, r20.w
+        mul r21.x, r20.w, cb5[87].y
+        add_sat r21.y, r9.w, r9.w
+        add r21.z, r21.y, l(-1.000000)
+        add r16.z, -r16.z, r21.z
+        add r16.z, r16.z, r16.z
+        mad r15.z, r15.z, r11.z, r16.z
+        max r15.z, r15.z, l(0.000000)
+        min r15.z, r15.z, l(2.000000)
+        add r16.z, -r21.y, l(1.000000)
+        mul r16.z, r15.x, r16.z
+        mad_sat r16.z, -r16.z, l(0.250000), r21.y
+        add r21.y, -r15.x, l(1.000000)
+        mul r21.y, r12.x, r21.y
+        mad r15.x, -r21.y, l(0.500000), -r15.x
+        mad r21.y, r12.y, l(2.000000), r15.x
+        mul_sat r21.y, r18.y, r21.y
+        add r15.x, r15.x, r15.z
+        mul_sat r15.x, r18.y, r15.x
+        mul r15.z, r12.x, l(0.200000)
+        mad r15.z, r19.w, l(0.800000), r15.z
+        max r18.y, r21.y, r15.x
+        mul r21.z, r15.z, r18.y
+        mul r15.z, r21.y, r21.y
+        mul r15.x, r15.x, r15.x
+        mad r18.y, -r15.x, l(0.500000), l(1.000000)
+        add r22.xy, -r6.xyxx, r17.xyxx
+        mad r22.xy, r18.yyyy, r22.xyxx, r6.xyxx
+        mul r22.xy, r22.xyxx, cb5[86].yyyy
+        mul r18.y, cb1[0].x, cb5[86].w
+        frc r18.y, r18.y
+        add r19.w, r18.y, r18.y
+        frc r19.w, r19.w
+        mad r21.y, r19.w, l(2.000000), l(-1.000000)
+        add r22.zw, r15.yyyw, l(0.000000, 0.000000, 0.010000, 0.010000)
+        mul r22.zw, r22.zzzw, l(0.000000, 0.000000, 4.000000, 4.000000)
+        max r22.zw, r22.zzzw, l(0.000000, 0.000000, -1.000000, -1.000000)
+        min r22.zw, r22.zzzw, l(0.000000, 0.000000, 1.000000, 1.000000)
+        div r22.zw, r22.zzzw, cb5[86].wwww
+        mul r23.x, cb5[86].y, cb5[86].z
+        mul r22.zw, r22.zzzw, r23.xxxx
+        dp2 r23.x, r22.zwzz, r22.zwzz
+        mul_sat r23.x, r23.x, cb5[89].x
+        add r23.x, -r23.x, l(1.000000)
+        add r23.y, -r16.z, l(1.000000)
+        mul r23.y, r23.y, l(8.000000)
+        mad r23.x, r23.x, cb5[89].x, r23.y
+        mad r23.yz, r19.wwww, r22.zzwz, r22.xxyx
+        mad r24.xy, r7.zzzz, l(0.500000, 0.500000, 0.000000, 0.000000), cb5[76].xyxx
+        add r19.w, r23.x, r24.x
+        sample_l r25.xyzw, r23.yzyy, t12.xyzw, s7, r19.w
+        mad r23.yz, r25.xxyx, l(0.000000, 2.000000, 2.000000, 0.000000), l(0.000000, -1.000000, -1.000000, 0.000000)
+        mad r18.y, r18.y, l(2.000000), l(0.500000)
+        frc r18.y, r18.y
+        mul r24.xz, r22.zzwz, r18.yyyy
+        mad r22.xy, r24.xzxx, l(1.250000, 1.250000, 0.000000, 0.000000), r22.xyxx
+        mad r18.y, r7.z, l(0.500000), r23.x
+        sample_l r25.xyzw, r22.xyxx, t12.xyzw, s7, r18.y
+        mad r22.xy, r25.xyxx, l(2.000000, 2.000000, 0.000000, 0.000000), l(-1.000000, -1.000000, 0.000000, 0.000000)
+        add r22.xy, -r23.yzyy, r22.xyxx
+        mad r22.xy, |r21.yyyy|, r22.xyxx, r23.yzyy
+        add r17.w, r17.w, -r18.x
+        mad r17.w, r15.x, r17.w, r18.x
+        mul r17.w, r5.w, r17.w
+        mul r17.w, r16.z, r17.w
+        mul r18.xy, r17.wwww, r22.xyxx
+        max r23.x, r15.z, r15.x
+        max r9.w, r15.z, r16.z
+        max r15.x, r15.z, cb5[88].y
+        mul r16.z, r15.z, cb5[87].y
+        mul r13.w, r13.w, r16.z
+        max r13.w, r13.w, r21.x
+        max r16.z, r15.z, r20.w
+        mul r21.xy, r22.zwzz, r18.xyxx
+        mul r21.xy, r21.xyxx, l(0.100000, 0.100000, 0.000000, 0.000000)
+        div r21.xy, r21.xyxx, cb5[86].yyyy
+        mad r21.xy, r6.xyxx, cb5[86].xxxx, r21.xyxx
+        sample_l r22.xyzw, r21.xyxx, t18.xyzw, s9, r24.y
+        mad r22.xy, r22.xyxx, l(2.000000, 2.000000, 0.000000, 0.000000), l(-1.000000, -1.000000, 0.000000, 0.000000)
+        mad r17.w, cb1[0].x, cb5[87].w, r22.w
+        frc r17.w, r17.w
+        add r19.w, r22.z, r17.w
+        add r19.w, r19.w, l(-1.000000)
+        mad r13.w, r13.w, l(0.800000), l(0.200000)
+        add_sat r17.w, -r17.w, r13.w
+        mul r17.w, r22.z, r17.w
+        mul r19.w, r19.w, l(9.000000)
+        max r19.w, r19.w, l(0.000000)
+        min r19.w, r19.w, l(3.000000)
+        mul r19.w, r19.w, l(3.141500)
+        sincos r19.w, null, r19.w
+        mul r17.w, r17.w, r19.w
+        mul r22.xy, r17.wwww, r22.xyxx
+        add r21.xy, r21.xyxx, l(0.250000, 0.250000, 0.000000, 0.000000)
+        sample_l r24.xyzw, r21.xyxx, t18.xyzw, s9, r24.y
+        mad r21.xy, r24.xyxx, l(2.000000, 2.000000, 0.000000, 0.000000), l(-1.000000, -1.000000, 0.000000, 0.000000)
+        mad r17.w, cb1[0].x, cb5[87].w, r24.w
+        frc r17.w, r17.w
+        add r19.w, r24.z, r17.w
+        add r19.w, r19.w, l(-1.000000)
+        add_sat r13.w, r13.w, -r17.w
+        mul r13.w, r24.z, r13.w
+        mul r17.w, r19.w, l(9.000000)
+        max r17.w, r17.w, l(0.000000)
+        min r17.w, r17.w, l(3.000000)
+        mul r17.w, r17.w, l(3.141500)
+        sincos r17.w, null, r17.w
+        mul r13.w, r13.w, r17.w
+        mul r21.xy, r13.wwww, r21.xyxx
+        mul r21.xy, r21.xyxx, l(0.350000, 0.350000, 0.000000, 0.000000)
+        mad r21.xy, r22.xyxx, l(0.350000, 0.350000, 0.000000, 0.000000), r21.xyxx
+        mul r13.w, r16.z, l(4.000000)
+        add r16.z, -r15.x, l(1.000000)
+        mad r15.x, r23.x, r16.z, r15.x
+        mul r13.w, r13.w, r15.x
+        mad r18.xy, r21.xyxx, r13.wwww, r18.xyxx
+        mul r21.xy, r18.xyxx, r18.zzzz
+        max r13.w, r18.w, r23.x
+        mad r17.xy, r21.xyxx, r13.wwww, r17.xyxx
+      else
+        mov r20.xyz, l(1.000000,1.000000,1.000000,0)
+        mov r18.xy, l(0,0,0,0)
+        mov r23.x, l(0)
+        mov r15.z, l(0)
+        mov r21.z, l(0)
+        mov r19.xyz, l(0,0,0,0)
+      endif
+      frc r18.zw, r17.xxxy
+      mad r18.zw, r18.zzzw, r11.wwww, r8.yyyy
+      add r21.xy, r18.zwzz, l(0.500000, 0.000000, 0.000000, 0.000000)
+      add r22.xyz, r18.zwzz, l(0.000000, 0.500000, 0.500000, 0.000000)
+      sample_l r24.xyzw, r18.zwzz, t5.xyzw, s4, r12.z
+      sample_l r25.xyzw, r21.xyxx, t5.xyzw, s4, r12.z
+      mul r25.xyz, r3.yyyy, r25.xyzx
+      mad r24.xyz, r3.xxxx, r24.xyzx, r25.xyzx
+      sample_l r26.xyzw, r22.xyxx, t5.xyzw, s4, r12.z
+      mad r24.xyz, r3.zzzz, r26.xyzx, r24.xyzx
+      sample_l r27.xyzw, r22.zyzz, t5.xyzw, s4, r12.z
+      mad r24.xyz, r3.wwww, r27.xyzx, r24.xyzx
+      mov r27.x, r24.w
+      mov r27.y, r25.w
+      mov r27.z, r26.w
+      dp4 r13.w, r27.xyzw, r3.xyzw
+      sample_l r25.xyzw, r18.zwzz, t6.xyzw, s4, r12.z
+      mad r24.xyz, r4.xxxx, r25.xyzx, r24.xyzx
+      sample_l r26.xyzw, r21.xyxx, t6.xyzw, s4, r12.z
+      mad r24.xyz, r4.yyyy, r26.xyzx, r24.xyzx
+      sample_l r27.xyzw, r22.xyxx, t6.xyzw, s4, r12.z
+      mad r24.xyz, r4.zzzz, r27.xyzx, r24.xyzx
+      sample_l r22.xyzw, r22.zyzz, t6.xyzw, s4, r12.z
+      mad r24.xyz, r4.wwww, r22.xyzx, r24.xyzx
+      mov r22.x, r25.w
+      mov r22.y, r26.w
+      mov r22.z, r27.w
+      dp4 r15.x, r22.xyzw, r4.xyzw
+      add r13.w, r13.w, r15.x
+      dp4 r15.x, r3.xyzw, cb5[175].xyzw
+      dp4 r16.z, r4.xyzw, cb5[176].xyzw
+      add r15.x, r15.x, r16.z
+      dp4 r16.z, r3.xyzw, cb5[177].xyzw
+      dp4 r17.w, r4.xyzw, cb5[178].xyzw
+      add r16.z, r16.z, r17.w
+      dp4 r17.w, r3.xyzw, cb5[173].xyzw
+      dp4 r18.z, r4.xyzw, cb5[174].xyzw
+      add r17.w, r17.w, r18.z
+      add r16.z, -r15.x, r16.z
+      mad r13.w, r13.w, r16.z, r15.x
+      dp3 r15.x, r24.xyzx, l(0.333330, 0.333330, 0.333330, 0.000000)
+      dp4 r16.z, r3.xyzw, cb5[12].xyzw
+      dp4 r18.z, r4.xyzw, cb5[16].xyzw
+      add r16.z, r16.z, r18.z
+      add r22.xyz, -r15.xxxx, r24.xyzx
+      mad r22.xyz, r16.zzzz, r22.xyzx, r15.xxxx
+      dp4 r15.x, r3.xyzw, cb5[11].xyzw
+      dp4 r16.z, r4.xyzw, cb5[15].xyzw
+      add r15.x, r15.x, r16.z
+      mul r22.xyz, r15.xxxx, r22.xyzx
+      mad r18.zw, r7.zzzz, l(0.000000, 0.000000, 0.500000, 0.500000), cb5[75].yyyw
+      sample_l r24.xyzw, r17.xyxx, t7.xyzw, s5, r18.z
+      sample_l r25.xyzw, r17.xyxx, t8.xyzw, s5, r18.z
+      mul r25.xyzw, r3.zzww, r25.xyzw
+      mad r24.xyzw, r24.xyzw, r3.xxyy, r25.xyzw
+      sample_l r25.xyzw, r17.xyxx, t9.xyzw, s5, r18.z
+      mad r24.xyzw, r25.xyzw, r4.xxyy, r24.xyzw
+      sample_l r25.xyzw, r17.xyxx, t10.xyzw, s5, r18.z
+      mad r24.xyzw, r25.xyzw, r4.zzww, r24.xyzw
+      add r21.xy, r24.zwzz, r24.xyxx
+      mad r21.xy, r21.xyxx, l(2.000000, 2.000000, 0.000000, 0.000000), l(-1.000000, -1.000000, 0.000000, 0.000000)
+      mul r24.xy, r5.wwww, r21.xyxx
+      dp2 r15.x, r24.xyxx, r24.xyxx
+      min r15.x, r15.x, l(1.000000)
+      add r15.x, -r15.x, l(1.000000)
+      sqrt r24.z, r15.x
+      mul r15.x, r11.z, r19.x
+      mad_sat r16.z, r13.w, l(2.000000), l(-1.000000)
+      add r16.z, -r16.z, l(1.000000)
+      mad_sat r19.x, r9.w, l(2.000000), l(-0.400000)
+      add r19.z, -r19.z, l(1.000000)
+      mad r19.w, r7.z, l(0.500000), cb5[76].x
+      mul_sat r19.w, r19.w, l(0.250000)
+      add r19.w, -r19.w, l(1.000000)
+      min r19.w, r5.w, r19.w
+      add r20.w, -r19.z, l(1.000000)
+      mad r19.z, r19.w, r20.w, r19.z
+      mad r19.y, r19.y, r11.z, -r15.x
+      mad r15.x, r23.x, r19.y, r15.x
+      mad r15.x, r15.x, r19.z, -r13.w
+      mad r15.x, r19.x, r15.x, r13.w
+      max r13.w, r13.w, r15.x
+      dp4 r15.x, r3.xyzw, cb5[108].xyzw
+      dp4 r19.y, r4.xyzw, cb5[109].xyzw
+      add r15.x, r15.x, r19.y
+      add r15.x, -r17.w, r15.x
+      mad r15.x, r19.x, r15.x, r17.w
+      max r15.x, r15.x, r17.w
+      mad r19.xyz, r22.xyzx, r22.xyzx, l(0.001000, 0.001000, 0.001000, 0.000000)
+      dp3 r17.w, r22.xyzx, l(1.000000, 1.000000, 1.000000, 0.000000)
+      dp3 r19.w, r19.xyzx, l(1.000000, 1.000000, 1.000000, 0.000000)
+      div r17.w, r17.w, r19.w
+      add r19.w, -r12.x, l(2.000000)
+      mul_sat r9.w, r9.w, r19.w
+      mul r19.w, r16.z, l(0.500000)
+      mul r19.w, r9.w, r19.w
+      mad r19.xyz, r19.xyzx, r17.wwww, -r22.xyzx
+      mad r19.xyz, r19.wwww, r19.xyzx, r22.xyzx
+      mul r9.w, r9.w, cb5[88].x
+      mad r16.z, r16.z, l(0.500000), l(0.500000)
+      mad r9.w, -r9.w, r16.z, l(1.000000)
+      mul r19.xyz, r9.wwww, r19.xyzx
+      mul r9.w, r23.x, r23.x
+      add r22.xyz, r20.xyzx, l(-1.000000, -1.000000, -1.000000, 0.000000)
+      mad r22.xyz, r9.wwww, r22.xyzx, l(1.000000, 1.000000, 1.000000, 0.000000)
+      mul r25.xyz, r19.xyzx, r22.xyzx
+      mad r19.xyz, -r19.xyzx, r22.xyzx, r20.xyzx
+      mad r19.xyz, r21.zzzz, r19.xyzx, r25.xyzx
+      mul r9.w, r23.x, l(0.700000)
+      max r9.w, r21.z, r9.w
+      max r9.w, r9.w, r15.z
+      add r20.xyz, -r24.xyzx, l(0.000000, 0.000000, 1.000000, 0.000000)
+      mad r20.xyz, r9.wwww, r20.xyzx, r24.xyzx
+      add r20.xy, r18.xyxx, r20.xyxx
+      mul r18.xy, r17.xyxx, cb5[140].xxxx
+      sample_l r22.xyzw, r18.xyxx, t12.xyzw, s7, r18.w
+      mad r18.xy, r22.xyxx, l(4.000000, 4.000000, 0.000000, 0.000000), l(-2.000000, -2.000000, 0.000000, 0.000000)
+      dp3 r9.w, l(0.800000, 0.800000, 0.800000, 0.000000), r19.xyzx
+      add r9.w, r9.w, l(0.400000)
+      mad r22.xy, r18.xyxx, r9.wwww, r20.xyxx
+      dp2 r9.w, r22.xyxx, r22.xyxx
+      min r9.w, r9.w, l(1.000000)
+      add r9.w, -r9.w, l(1.000000)
+      sqrt r22.z, r9.w
+      dp3 r9.w, r22.xyzx, r22.xyzx
+      rsq r9.w, r9.w
+      dp4 r16.z, r3.xyzw, cb5[145].xyzw
+      dp4 r17.w, r4.xyzw, cb5[146].xyzw
+      add r16.z, r16.z, r17.w
+      mul r16.z, r5.w, r16.z
+      add r15.z, -r15.z, l(1.000000)
+      mul r15.z, r15.z, r16.z
+      mad r18.xyw, r22.xyxz, r9.wwww, -r20.xyxz
+      mad r18.xyw, r15.zzzz, r18.xyxw, r20.xyxz
+      add r9.w, -cb5[184].y, l(1.000000)
+      mul r20.z, r9.w, v6.z
+      mov r20.xy, v6.xyxx
+      dp3 r9.w, r20.xyzx, r20.xyzx
+      rsq r9.w, r9.w
+      mul r20.xyz, r9.wwww, r20.xyzx
+      max r9.w, r9.y, l(0.001000)
+      div r20.w, r20.z, r9.w
+      exp r9.w, r18.z
+      mul r9.w, r9.w, cb5[65].x
+      mul r9.w, r9.w, cb5[74].x
+      dp2 r15.z, r20.xyxx, r20.xyxx
+      sqrt r15.z, r15.z
+      div r9.w, r9.w, r15.z
+      mul r22.xyz, r20.xywx, cb5[65].xxxx
+      mad r17.xyz, r22.xyzx, l(2.000000, 2.000000, 2.000000, 0.000000), r17.xyzx
+      mov r22.xyz, r17.xyzx
+      mov r15.z, l(0)
+      mov r16.z, l(0)
+      loop
+        itof r17.w, r16.z
+        ge r17.w, r17.w, cb5[73].w
+        breakc_nz r17.w
+        mad r22.xyz, r20.xywx, r9.wwww, r22.xyzx
+        sample_l r24.xyzw, r22.xyxx, t13.xyzw, s8, r18.z
+        dp4 r17.w, r3.xyzw, r24.xyzw
+        sample_l r24.xyzw, r22.xyxx, t14.xyzw, s8, r18.z
+        dp4 r19.w, r4.xyzw, r24.xyzw
+        add r17.w, r17.w, r19.w
+        ge r17.w, r17.w, r22.z
+        if_nz r17.w
+          mov r15.z, l(-1)
+          break
+        endif
+        iadd r16.z, r16.z, l(1)
+        mov r15.z, r17.w
+      endloop
+      movc r9.w, r15.z, l(0), cb5[74].y
+      add r15.z, -cb5[74].y, l(1.000000)
+      add r9.w, r9.w, r15.z
+      mad_sat r15.z, r5.w, l(4.000000), l(-1.000000)
+      mul r15.z, r10.w, r15.z
+      add r9.w, r9.w, l(-1.000000)
+      mad r9.w, r15.z, r9.w, l(1.000000)
+      add r15.z, -r9.w, l(1.000000)
+      mad r9.w, r21.z, r15.z, r9.w
+    else
+      lt r15.z, r7.w, r5.z
+      if_nz r15.z
+        lt r15.z, l(0.000000), r10.w
+        if_nz r15.z
+          mov r17.xy, r6.xyxx
+          mov r15.z, l(0)
+          mov r16.z, l(0)
+          mov r17.zw, l(0,0,1.000000,1.001000)
+          mov r18.z, l(0)
+          mov r19.w, l(0)
+          loop
+            itof r20.x, r19.w
+            ge r20.x, r20.x, cb5[72].y
+            breakc_nz r20.x
+            mad r20.xyz, r16.xywx, r9.xxxx, r17.xyzx
+            sample_l r22.xyzw, r20.xyxx, t13.xyzw, s8, r12.w
+            dp4_sat r20.w, r3.xyzw, r22.xyzw
+            ge r21.x, r20.w, r20.z
+            if_nz r21.x
+              mov r17.xyz, r20.xyzx
+              mov r15.z, l(-1)
+              mov r18.z, r20.w
+              break
+            endif
+            add r16.z, -r20.w, r20.z
+            mov r17.w, r20.w
+            iadd r19.w, r19.w, l(1)
+            mov r17.xyz, r20.xyzx
+            mov r15.z, r21.x
+            mov r18.z, r20.w
+          endloop
+        else
+          mov r17.xy, r6.xyxx
+          mov r15.z, l(0)
+          mov r16.z, l(0)
+          mov r17.zw, l(0,0,1.000000,1.001000)
+          mov r18.z, l(0)
+        endif
+        if_nz r15.z
+          add r15.z, -r17.w, r18.z
+          mad r15.z, -r16.w, r9.x, r15.z
+          div r15.z, r16.z, r15.z
+          add r19.w, -r15.z, l(1.000000)
+          mul r20.xyz, r14.xyzx, r19.wwww
+          mad r22.xyz, -r14.xyzx, r19.wwww, r17.xyzx
+          sample_l r24.xyzw, r22.xyxx, t13.xyzw, s8, r12.w
+          dp4_sat r20.w, r3.xyzw, r24.xyzw
+          ge r21.x, r20.w, r22.z
+          mul r24.xyz, r14.xyzx, r15.zzzz
+          add r17.w, -r17.w, r20.w
+          mad r15.z, -r14.z, r15.z, r17.w
+          div r15.z, r16.z, r15.z
+          add r15.z, -r15.z, l(1.000000)
+          mad r24.xyz, -r24.xyzx, r15.zzzz, r22.xyzx
+          add r15.z, -r20.w, r22.z
+          add r16.z, r18.z, -r20.w
+          mad r16.z, -r14.z, r19.w, r16.z
+          div r15.z, r15.z, r16.z
+          mad r20.xyz, r20.xyzx, r15.zzzz, r22.xyzx
+          movc r17.xyz, r21.xxxx, r24.xyzx, r20.xyzx
+        endif
+        dp4 r15.z, r3.xyzw, cb5[90].xyzw
+        add r16.z, -r14.w, l(1.000000)
+        mad r17.w, -r15.z, cb5[84].x, l(1.000000)
+        mad r17.w, -r12.x, r17.w, r16.z
+        add_sat r17.w, r17.w, r17.w
+        mul r17.w, r17.w, cb5[84].x
+        mul r15.z, r15.z, r17.w
+        lt r17.w, l(0.000000), r15.z
+        lt r18.z, l(0.000000), r12.y
+        or r17.w, r17.w, r18.z
+        if_nz r17.w
+          add r17.w, -r9.z, r17.z
+          mad r17.w, r5.w, r17.w, r9.z
+          dp4 r18.z, r3.xyzw, cb5[92].xyzw
+          add r19.w, -r8.w, l(1.000000)
+          mul r18.z, r18.z, r19.w
+          dp4 r19.w, r3.xyzw, cb5[94].xyzw
+          dp4 r20.x, r3.xyzw, cb5[102].xyzw
+          dp4 r20.y, r3.xyzw, cb5[104].xyzw
+          dp4 r20.z, r3.xyzw, cb5[96].xyzw
+          dp4 r20.w, r3.xyzw, cb5[98].xyzw
+          dp4 r21.x, r3.xyzw, cb5[100].xyzw
+          dp4 r22.x, r3.xyzw, cb5[106].xyzw
+          dp4 r21.y, r3.xyzw, cb5[112].xyzw
+          dp4 r22.y, r3.xyzw, cb5[110].xyzw
+          dp4 r24.x, r3.xyzw, cb5[116].xyzw
+          dp4 r24.y, r3.xyzw, cb5[118].xyzw
+          dp4 r24.z, r3.xyzw, cb5[120].xyzw
+          dp4 r22.z, r3.xyzw, cb5[122].xyzw
+          mul_sat r19.w, r8.z, r19.w
+          mad_sat r22.w, r15.z, l(6.000000), l(-1.000000)
+          mad r24.w, -r19.w, l(4.000000), l(1.000000)
+          max r24.w, r24.w, l(0.000000)
+          mul r22.w, r22.w, r24.w
+          mul r22.w, r5.w, r22.w
+          mul r24.w, r22.w, cb5[87].y
+          add_sat r25.x, r15.z, r15.z
+          add r25.y, r25.x, l(-1.000000)
+          add r19.w, -r19.w, r25.y
+          add r19.w, r19.w, r19.w
+          mad r18.z, r18.z, r11.z, r19.w
+          max r18.z, r18.z, l(0.000000)
+          min r18.z, r18.z, l(2.000000)
+          add r19.w, -r25.x, l(1.000000)
+          mul r19.w, r17.w, r19.w
+          mad_sat r19.w, -r19.w, l(0.250000), r25.x
+          add r25.x, -r17.w, l(1.000000)
+          mul r25.x, r12.x, r25.x
+          mad r17.w, -r25.x, l(0.500000), -r17.w
+          mad r25.x, r12.y, l(2.000000), r17.w
+          mul_sat r25.x, r20.z, r25.x
+          add r17.w, r17.w, r18.z
+          mul_sat r17.w, r20.z, r17.w
+          mul r18.z, r12.x, l(0.200000)
+          mad r18.z, r22.z, l(0.800000), r18.z
+          max r20.z, r25.x, r17.w
+          mul r21.z, r18.z, r20.z
+          mul r18.z, r25.x, r25.x
+          mul r17.w, r17.w, r17.w
+          mad r20.z, -r17.w, l(0.500000), l(1.000000)
+          add r25.xy, -r6.xyxx, r17.xyxx
+          mad r25.xy, r20.zzzz, r25.xyxx, r6.xyxx
+          mul r25.xy, r25.xyxx, cb5[86].yyyy
+          mul r20.z, cb1[0].x, cb5[86].w
+          frc r20.z, r20.z
+          add r22.z, r20.z, r20.z
+          frc r22.z, r22.z
+          mad r25.z, r22.z, l(2.000000), l(-1.000000)
+          add r26.xy, r15.ywyy, l(0.010000, 0.010000, 0.000000, 0.000000)
+          mul r26.xy, r26.xyxx, l(4.000000, 4.000000, 0.000000, 0.000000)
+          max r26.xy, r26.xyxx, l(-1.000000, -1.000000, 0.000000, 0.000000)
+          min r26.xy, r26.xyxx, l(1.000000, 1.000000, 0.000000, 0.000000)
+          div r26.xy, r26.xyxx, cb5[86].wwww
+          mul r25.w, cb5[86].y, cb5[86].z
+          mul r26.xy, r25.wwww, r26.xyxx
+          dp2 r25.w, r26.xyxx, r26.xyxx
+          mul_sat r25.w, r25.w, cb5[89].x
+          add r25.w, -r25.w, l(1.000000)
+          add r26.z, -r19.w, l(1.000000)
+          mul r26.z, r26.z, l(8.000000)
+          mad r25.w, r25.w, cb5[89].x, r26.z
+          mad r26.zw, r22.zzzz, r26.xxxy, r25.xxxy
+          mad r27.xy, r7.zzzz, l(0.500000, 0.500000, 0.000000, 0.000000), cb5[76].xyxx
+          add r22.z, r25.w, r27.x
+          sample_l r28.xyzw, r26.zwzz, t12.xyzw, s7, r22.z
+          mad r26.zw, r28.xxxy, l(0.000000, 0.000000, 2.000000, 2.000000), l(0.000000, 0.000000, -1.000000, -1.000000)
+          mad r20.z, r20.z, l(2.000000), l(0.500000)
+          frc r20.z, r20.z
+          mul r27.xz, r26.xxyx, r20.zzzz
+          mad r25.xy, r27.xzxx, l(1.250000, 1.250000, 0.000000, 0.000000), r25.xyxx
+          sample_l r28.xyzw, r25.xyxx, t12.xyzw, s7, r22.z
+          mad r25.xy, r28.xyxx, l(2.000000, 2.000000, 0.000000, 0.000000), l(-1.000000, -1.000000, 0.000000, 0.000000)
+          add r25.xy, -r26.zwzz, r25.xyxx
+          mad r25.xy, |r25.zzzz|, r25.xyxx, r26.zwzz
+          add r20.x, -r20.y, r20.x
+          mad r20.x, r17.w, r20.x, r20.y
+          mul r20.x, r5.w, r20.x
+          mul r20.x, r19.w, r20.x
+          mul r20.xy, r20.xxxx, r25.xyxx
+          max r23.x, r18.z, r17.w
+          max r15.z, r18.z, r19.w
+          max r17.w, r18.z, cb5[88].y
+          mul r19.w, r18.z, cb5[87].y
+          mul r16.z, r16.z, r19.w
+          max r16.z, r16.z, r24.w
+          max r19.w, r18.z, r22.w
+          mul r22.zw, r26.xxxy, r20.xxxy
+          mul r22.zw, r22.zzzw, l(0.000000, 0.000000, 0.100000, 0.100000)
+          div r22.zw, r22.zzzw, cb5[86].yyyy
+          mad r22.zw, r6.xxxy, cb5[86].xxxx, r22.zzzw
+          sample_l r25.xyzw, r22.zwzz, t18.xyzw, s9, r27.y
+          mad r25.xy, r25.xyxx, l(2.000000, 2.000000, 0.000000, 0.000000), l(-1.000000, -1.000000, 0.000000, 0.000000)
+          mad r20.z, cb1[0].x, cb5[87].w, r25.w
+          frc r20.z, r20.z
+          add r24.w, r25.z, r20.z
+          add r24.w, r24.w, l(-1.000000)
+          mad r16.z, r16.z, l(0.800000), l(0.200000)
+          add_sat r20.z, -r20.z, r16.z
+          mul r20.z, r25.z, r20.z
+          mul r24.w, r24.w, l(9.000000)
+          max r24.w, r24.w, l(0.000000)
+          min r24.w, r24.w, l(3.000000)
+          mul r24.w, r24.w, l(3.141500)
+          sincos r24.w, null, r24.w
+          mul r20.z, r20.z, r24.w
+          mul r25.xy, r20.zzzz, r25.xyxx
+          add r22.zw, r22.zzzw, l(0.000000, 0.000000, 0.250000, 0.250000)
+          sample_l r26.xyzw, r22.zwzz, t18.xyzw, s9, r27.y
+          mad r22.zw, r26.xxxy, l(0.000000, 0.000000, 2.000000, 2.000000), l(0.000000, 0.000000, -1.000000, -1.000000)
+          mad r20.z, cb1[0].x, cb5[87].w, r26.w
+          frc r20.z, r20.z
+          add r24.w, r26.z, r20.z
+          add r24.w, r24.w, l(-1.000000)
+          add_sat r16.z, r16.z, -r20.z
+          mul r16.z, r26.z, r16.z
+          mul r20.z, r24.w, l(9.000000)
+          max r20.z, r20.z, l(0.000000)
+          min r20.z, r20.z, l(3.000000)
+          mul r20.z, r20.z, l(3.141500)
+          sincos r20.z, null, r20.z
+          mul r16.z, r16.z, r20.z
+          mul r22.zw, r16.zzzz, r22.zzzw
+          mul r22.zw, r22.zzzw, l(0.000000, 0.000000, 0.350000, 0.350000)
+          mad r22.zw, r25.xxxy, l(0.000000, 0.000000, 0.350000, 0.350000), r22.zzzw
+          mul r16.z, r19.w, l(4.000000)
+          add r19.w, -r17.w, l(1.000000)
+          mad r17.w, r23.x, r19.w, r17.w
+          mul r16.z, r16.z, r17.w
+          mad r20.xy, r22.zwzz, r16.zzzz, r20.xyxx
+          mul r20.zw, r20.xxxy, r20.wwww
+          max r16.z, r21.x, r23.x
+          mad r17.xy, r20.zwzz, r16.zzzz, r17.xyxx
+        else
+          mov r24.xyz, l(1.000000,1.000000,1.000000,0)
+          mov r22.xy, l(0,0,0,0)
+          mov r20.xy, l(0,0,0,0)
+          mov r23.x, l(0)
+          mov r18.z, l(0)
+          mov r21.yz, l(0,0,0,0)
+        endif
+        frc r20.zw, r17.xxxy
+        mad r20.zw, r20.zzzw, r11.wwww, r8.yyyy
+        add r22.zw, r20.zzzw, l(0.000000, 0.000000, 0.500000, 0.000000)
+        add r25.xyz, r20.zwzz, l(0.000000, 0.500000, 0.500000, 0.000000)
+        sample_l r26.xyzw, r20.zwzz, t5.xyzw, s4, r12.z
+        sample_l r27.xyzw, r22.zwzz, t5.xyzw, s4, r12.z
+        mul r27.xyz, r3.yyyy, r27.xyzx
+        mad r26.xyz, r3.xxxx, r26.xyzx, r27.xyzx
+        sample_l r28.xyzw, r25.xyxx, t5.xyzw, s4, r12.z
+        mad r26.xyz, r3.zzzz, r28.xyzx, r26.xyzx
+        sample_l r25.xyzw, r25.zyzz, t5.xyzw, s4, r12.z
+        mad r26.xyz, r3.wwww, r25.xyzx, r26.xyzx
+        mov r25.x, r26.w
+        mov r25.y, r27.w
+        mov r25.z, r28.w
+        dp4 r16.z, r25.xyzw, r3.xyzw
+        dp4 r17.w, r3.xyzw, cb5[182].xyzw
+        mul r17.w, r16.z, r17.w
+        mul_sat r19.w, r11.y, l(0.200000)
+        mad_sat r16.z, -r17.w, r19.w, r16.z
+        dp4 r17.w, r3.xyzw, cb5[175].xyzw
+        dp4 r19.w, r3.xyzw, cb5[177].xyzw
+        dp4 r20.z, r3.xyzw, cb5[173].xyzw
+        add r19.w, -r17.w, r19.w
+        mad r16.z, r16.z, r19.w, r17.w
+        dp3 r17.w, r26.xyzx, l(0.333330, 0.333330, 0.333330, 0.000000)
+        dp4 r19.w, r3.xyzw, cb5[12].xyzw
+        add r25.xyz, -r17.wwww, r26.xyzx
+        mad r25.xyz, r19.wwww, r25.xyzx, r17.wwww
+        dp4 r17.w, r3.xyzw, cb5[11].xyzw
+        mul r25.xyz, r17.wwww, r25.xyzx
+        sample_d r26.xyzw, r17.xyxx, t7.xyzw, s5, r6.zwzz, r7.xyxx
+        sample_d r27.xyzw, r17.xyxx, t8.xyzw, s5, r6.zwzz, r7.xyxx
+        mul r27.xyzw, r3.zzww, r27.xyzw
+        mad r26.xyzw, r26.xyzw, r3.xxyy, r27.xyzw
+        add r6.zw, r26.zzzw, r26.xxxy
+        mad r6.zw, r6.zzzw, l(0.000000, 0.000000, 2.000000, 2.000000), l(0.000000, 0.000000, -1.000000, -1.000000)
+        mul r26.xy, r5.wwww, r6.zwzz
+        dp2 r6.z, r26.xyxx, r26.xyxx
+        min r6.z, r6.z, l(1.000000)
+        add r6.z, -r6.z, l(1.000000)
+        sqrt r26.z, r6.z
+        mul r6.z, r11.z, r22.x
+        mad_sat r6.w, r16.z, l(2.000000), l(-1.000000)
+        add r6.w, -r6.w, l(1.000000)
+        mad_sat r7.x, r15.z, l(2.000000), l(-0.400000)
+        add r7.y, -r21.y, l(1.000000)
+        mad r17.w, r7.z, l(0.500000), cb5[76].x
+        mul_sat r17.w, r17.w, l(0.250000)
+        add r17.w, -r17.w, l(1.000000)
+        min r17.w, r5.w, r17.w
+        add r19.w, -r7.y, l(1.000000)
+        mad r7.y, r17.w, r19.w, r7.y
+        mad r17.w, r22.y, r11.z, -r6.z
+        mad r6.z, r23.x, r17.w, r6.z
+        mad r6.z, r6.z, r7.y, -r16.z
+        mad r6.z, r7.x, r6.z, r16.z
+        max r13.w, r6.z, r16.z
+        dp4 r6.z, r3.xyzw, cb5[108].xyzw
+        add r6.z, -r20.z, r6.z
+        mad r6.z, r7.x, r6.z, r20.z
+        max r15.x, r6.z, r20.z
+        mad r22.xyz, r25.xyzx, r25.xyzx, l(0.001000, 0.001000, 0.001000, 0.000000)
+        dp3 r6.z, r25.xyzx, l(1.000000, 1.000000, 1.000000, 0.000000)
+        dp3 r7.x, r22.xyzx, l(1.000000, 1.000000, 1.000000, 0.000000)
+        div r6.z, r6.z, r7.x
+        add r7.x, -r12.x, l(2.000000)
+        mul_sat r7.x, r7.x, r15.z
+        mul r7.y, r6.w, l(0.500000)
+        mul r7.y, r7.y, r7.x
+        mad r22.xyz, r22.xyzx, r6.zzzz, -r25.xyzx
+        mad r22.xyz, r7.yyyy, r22.xyzx, r25.xyzx
+        mul r6.z, r7.x, cb5[88].x
+        mad r6.w, r6.w, l(0.500000), l(0.500000)
+        mad r6.z, -r6.z, r6.w, l(1.000000)
+        mul r22.xyz, r6.zzzz, r22.xyzx
+        mul r6.z, r23.x, r23.x
+        add r25.xyz, r24.xyzx, l(-1.000000, -1.000000, -1.000000, 0.000000)
+        mad r25.xyz, r6.zzzz, r25.xyzx, l(1.000000, 1.000000, 1.000000, 0.000000)
+        mul r27.xyz, r22.xyzx, r25.xyzx
+        mad r22.xyz, -r22.xyzx, r25.xyzx, r24.xyzx
+        mad r19.xyz, r21.zzzz, r22.xyzx, r27.xyzx
+        mul r6.z, r23.x, l(0.700000)
+        max r6.z, r21.z, r6.z
+        max r6.z, r6.z, r18.z
+        add r22.xyz, -r26.xyzx, l(0.000000, 0.000000, 1.000000, 0.000000)
+        mad r22.xyz, r6.zzzz, r22.xyzx, r26.xyzx
+        add r22.xy, r20.xyxx, r22.xyxx
+        mul r6.zw, r17.xxxy, cb5[140].xxxx
+        mad r7.xy, r7.zzzz, l(0.500000, 0.500000, 0.000000, 0.000000), cb5[75].ywyy
+        sample_l r20.xyzw, r6.zwzz, t12.xyzw, s7, r7.y
+        mad r6.zw, r20.xxxy, l(0.000000, 0.000000, 4.000000, 4.000000), l(0.000000, 0.000000, -2.000000, -2.000000)
+        dp3 r7.y, l(0.800000, 0.800000, 0.800000, 0.000000), r19.xyzx
+        add r7.y, r7.y, l(0.400000)
+        mad r20.xy, r6.zwzz, r7.yyyy, r22.xyxx
+        dp2 r6.z, r20.xyxx, r20.xyxx
+        min r6.z, r6.z, l(1.000000)
+        add r6.z, -r6.z, l(1.000000)
+        sqrt r20.z, r6.z
+        dp3 r6.z, r20.xyzx, r20.xyzx
+        rsq r6.z, r6.z
+        dp4 r6.w, r3.xyzw, cb5[145].xyzw
+        mul r6.w, r5.w, r6.w
+        add r7.y, -r18.z, l(1.000000)
+        mul r6.w, r6.w, r7.y
+        mad r20.xyz, r20.xyzx, r6.zzzz, -r22.xyzx
+        mad r18.xyw, r6.wwww, r20.xyxz, r22.xyxz
+        add r6.z, -cb5[184].y, l(1.000000)
+        mul r20.z, r6.z, v6.z
+        mov r20.xy, v6.xyxx
+        dp3 r6.z, r20.xyzx, r20.xyzx
+        rsq r6.z, r6.z
+        mul r20.xyz, r6.zzzz, r20.xyzx
+        max r6.z, r9.y, l(0.001000)
+        div r20.w, r20.z, r6.z
+        exp r6.z, r7.x
+        mul r6.z, r6.z, cb5[65].x
+        mul r6.z, r6.z, cb5[74].x
+        dp2 r6.w, r20.xyxx, r20.xyxx
+        sqrt r6.w, r6.w
+        div r6.z, r6.z, r6.w
+        mul r22.xyz, r20.xywx, cb5[65].xxxx
+        mad r17.xyz, r22.xyzx, l(2.000000, 2.000000, 2.000000, 0.000000), r17.xyzx
+        mov r22.xyz, r17.xyzx
+        mov r6.w, l(0)
+        mov r7.y, l(0)
+        loop
+          itof r15.z, r7.y
+          ge r15.z, r15.z, cb5[73].w
+          breakc_nz r15.z
+          mad r22.xyz, r20.xywx, r6.zzzz, r22.xyzx
+          sample_l r24.xyzw, r22.xyxx, t13.xyzw, s8, r7.x
+          dp4 r15.z, r3.xyzw, r24.xyzw
+          ge r15.z, r15.z, r22.z
+          if_nz r15.z
+            mov r6.w, l(-1)
+            break
+          endif
+          iadd r7.y, r7.y, l(1)
+          mov r6.w, r15.z
+        endloop
+        movc r6.z, r6.w, l(0), cb5[74].y
+        add r6.w, -cb5[74].y, l(1.000000)
+        add r6.z, r6.w, r6.z
+        mad_sat r6.w, r5.w, l(4.000000), l(-1.000000)
+        mul r6.w, r10.w, r6.w
+        add r6.z, r6.z, l(-1.000000)
+        mad r6.z, r6.w, r6.z, l(1.000000)
+        add r6.w, -r6.z, l(1.000000)
+        mad r9.w, r21.z, r6.w, r6.z
+      else
+        lt r6.z, l(0.000000), r10.w
+        if_nz r6.z
+          mov r17.xy, r6.xyxx
+          mov r17.z, l(1.000000)
+          mov r6.zw, l(0,0,0,0)
+          mov r7.xy, l(1.001000,0,0,0)
+          mov r15.z, l(0)
+          loop
+            itof r16.z, r15.z
+            ge r16.z, r16.z, cb5[72].y
+            breakc_nz r16.z
+            mad r20.xyz, r16.xywx, r9.xxxx, r17.xyzx
+            sample_l r22.xyzw, r20.xyxx, t14.xyzw, s8, r12.w
+            dp4_sat r16.z, r4.xyzw, r22.xyzw
+            ge r17.w, r16.z, r20.z
+            if_nz r17.w
+              mov r17.xyz, r20.xyzx
+              mov r6.z, l(-1)
+              mov r7.y, r16.z
+              break
+            endif
+            add r6.w, -r16.z, r20.z
+            mov r7.x, r16.z
+            iadd r15.z, r15.z, l(1)
+            mov r17.xyz, r20.xyzx
+            mov r6.z, r17.w
+            mov r7.y, r16.z
+          endloop
+        else
+          mov r17.xy, r6.xyxx
+          mov r17.z, l(1.000000)
+          mov r6.zw, l(0,0,0,0)
+          mov r7.xy, l(1.001000,0,0,0)
+        endif
+        if_nz r6.z
+          add r6.z, -r7.x, r7.y
+          mad r6.z, -r16.w, r9.x, r6.z
+          div r6.z, r6.w, r6.z
+          add r9.x, -r6.z, l(1.000000)
+          mul r16.xyz, r9.xxxx, r14.xyzx
+          mad r20.xyz, -r14.xyzx, r9.xxxx, r17.xyzx
+          sample_l r22.xyzw, r20.xyxx, t14.xyzw, s8, r12.w
+          dp4_sat r12.w, r4.xyzw, r22.xyzw
+          ge r15.z, r12.w, r20.z
+          mul r22.xyz, r6.zzzz, r14.xyzx
+          add r7.x, -r7.x, r12.w
+          mad r6.z, -r14.z, r6.z, r7.x
+          div r6.z, r6.w, r6.z
+          add r6.z, -r6.z, l(1.000000)
+          mad r22.xyz, -r22.xyzx, r6.zzzz, r20.xyzx
+          add r6.z, -r12.w, r20.z
+          add r6.w, r7.y, -r12.w
+          mad r6.w, -r14.z, r9.x, r6.w
+          div r6.z, r6.z, r6.w
+          mad r14.xyz, r16.xyzx, r6.zzzz, r20.xyzx
+          movc r17.xyz, r15.zzzz, r22.xyzx, r14.xyzx
+        endif
+        dp4 r6.z, r4.xyzw, cb5[91].xyzw
+        add r6.w, -r14.w, l(1.000000)
+        mad r7.x, -r6.z, cb5[84].x, l(1.000000)
+        mad r6.w, -r12.x, r7.x, r6.w
+        add_sat r6.w, r6.w, r6.w
+        mul r6.w, r6.w, cb5[84].x
+        mul r6.z, r6.w, r6.z
+        lt r6.w, l(0.000000), r6.z
+        lt r7.x, l(0.000000), r12.y
+        or r6.w, r6.w, r7.x
+        if_nz r6.w
+          add r6.w, -r9.z, r17.z
+          mad r6.w, r5.w, r6.w, r9.z
+          dp4 r7.x, r4.xyzw, cb5[93].xyzw
+          add r7.y, -r8.w, l(1.000000)
+          mul r7.x, r7.y, r7.x
+          dp4 r7.y, r4.xyzw, cb5[95].xyzw
+          dp4 r9.x, r4.xyzw, cb5[103].xyzw
+          dp4 r12.w, r4.xyzw, cb5[105].xyzw
+          dp4 r14.x, r4.xyzw, cb5[97].xyzw
+          dp4 r14.y, r4.xyzw, cb5[99].xyzw
+          dp4 r14.z, r4.xyzw, cb5[101].xyzw
+          dp4 r16.x, r4.xyzw, cb5[107].xyzw
+          dp4 r15.z, r4.xyzw, cb5[113].xyzw
+          dp4 r16.y, r4.xyzw, cb5[111].xyzw
+          dp4 r20.x, r4.xyzw, cb5[117].xyzw
+          dp4 r20.y, r4.xyzw, cb5[119].xyzw
+          dp4 r20.z, r4.xyzw, cb5[121].xyzw
+          dp4 r16.z, r4.xyzw, cb5[123].xyzw
+          mul_sat r7.y, r7.y, r8.z
+          mad_sat r16.w, r6.z, l(6.000000), l(-1.000000)
+          mad r17.w, -r7.y, l(4.000000), l(1.000000)
+          max r17.w, r17.w, l(0.000000)
+          mul r16.w, r16.w, r17.w
+          mul r16.w, r5.w, r16.w
+          mul r17.w, r16.w, cb5[87].y
+          add_sat r18.z, r6.z, r6.z
+          add r19.w, r18.z, l(-1.000000)
+          add r7.y, -r7.y, r19.w
+          add r7.y, r7.y, r7.y
+          mad r7.x, r7.x, r11.z, r7.y
+          max r7.x, r7.x, l(0.000000)
+          min r7.x, r7.x, l(2.000000)
+          add r7.y, -r18.z, l(1.000000)
+          mul r7.y, r6.w, r7.y
+          mad_sat r7.y, -r7.y, l(0.250000), r18.z
+          add r18.z, -r6.w, l(1.000000)
+          mul r18.z, r12.x, r18.z
+          mad r6.w, -r18.z, l(0.500000), -r6.w
+          mad r18.z, r12.y, l(2.000000), r6.w
+          mul_sat r18.z, r14.x, r18.z
+          add r6.w, r6.w, r7.x
+          mul_sat r6.w, r14.x, r6.w
+          mul r7.x, r12.x, l(0.200000)
+          mad r7.x, r16.z, l(0.800000), r7.x
+          max r14.x, r18.z, r6.w
+          mul r21.z, r7.x, r14.x
+          mul r7.x, r18.z, r18.z
+          mul r6.w, r6.w, r6.w
+          mad r14.x, -r6.w, l(0.500000), l(1.000000)
+          add r21.xy, -r6.xyxx, r17.xyxx
+          mad r21.xy, r14.xxxx, r21.xyxx, r6.xyxx
+          mul r21.xy, r21.xyxx, cb5[86].yyyy
+          mul r14.x, cb1[0].x, cb5[86].w
+          frc r14.x, r14.x
+          add r16.z, r14.x, r14.x
+          frc r16.z, r16.z
+          mad r18.z, r16.z, l(2.000000), l(-1.000000)
+          add r15.yw, r15.yyyw, l(0.000000, 0.010000, 0.000000, 0.010000)
+          mul r15.yw, r15.yyyw, l(0.000000, 4.000000, 0.000000, 4.000000)
+          max r15.yw, r15.yyyw, l(0.000000, -1.000000, 0.000000, -1.000000)
+          min r15.yw, r15.yyyw, l(0.000000, 1.000000, 0.000000, 1.000000)
+          div r15.yw, r15.yyyw, cb5[86].wwww
+          mul r19.w, cb5[86].y, cb5[86].z
+          mul r15.yw, r15.yyyw, r19.wwww
+          dp2 r19.w, r15.ywyy, r15.ywyy
+          mul_sat r19.w, r19.w, cb5[89].x
+          add r19.w, -r19.w, l(1.000000)
+          add r20.w, -r7.y, l(1.000000)
+          mul r20.w, r20.w, l(8.000000)
+          mad r19.w, r19.w, cb5[89].x, r20.w
+          mad r22.xy, r16.zzzz, r15.ywyy, r21.xyxx
+          mad r22.zw, r7.zzzz, l(0.000000, 0.000000, 0.500000, 0.500000), cb5[76].xxxy
+          add r16.z, r19.w, r22.z
+          sample_l r24.xyzw, r22.xyxx, t12.xyzw, s7, r16.z
+          mad r22.xy, r24.xyxx, l(2.000000, 2.000000, 0.000000, 0.000000), l(-1.000000, -1.000000, 0.000000, 0.000000)
+          mad r14.x, r14.x, l(2.000000), l(0.500000)
+          frc r14.x, r14.x
+          mul r24.xy, r15.ywyy, r14.xxxx
+          mad r21.xy, r24.xyxx, l(1.250000, 1.250000, 0.000000, 0.000000), r21.xyxx
+          sample_l r24.xyzw, r21.xyxx, t12.xyzw, s7, r16.z
+          mad r21.xy, r24.xyxx, l(2.000000, 2.000000, 0.000000, 0.000000), l(-1.000000, -1.000000, 0.000000, 0.000000)
+          add r21.xy, -r22.xyxx, r21.xyxx
+          mad r21.xy, |r18.zzzz|, r21.xyxx, r22.xyxx
+          add r9.x, r9.x, -r12.w
+          mad r9.x, r6.w, r9.x, r12.w
+          mul r9.x, r5.w, r9.x
+          mul r9.x, r7.y, r9.x
+          mul r21.xy, r9.xxxx, r21.xyxx
+          max r23.x, r7.x, r6.w
+          max r6.z, r7.x, r7.y
+          max r6.w, r7.x, cb5[88].y
+          mul r7.y, r7.x, cb5[87].y
+          add r9.x, -r14.w, l(1.000000)
+          mul r7.y, r7.y, r9.x
+          max r7.y, r7.y, r17.w
+          max r9.x, r7.x, r16.w
+          mul r15.yw, r15.yyyw, r21.xxxy
+          mul r15.yw, r15.yyyw, l(0.000000, 0.100000, 0.000000, 0.100000)
+          div r15.yw, r15.yyyw, cb5[86].yyyy
+          mad r15.yw, r6.xxxy, cb5[86].xxxx, r15.yyyw
+          sample_l r24.xyzw, r15.ywyy, t18.xyzw, s9, r22.w
+          mad r16.zw, r24.xxxy, l(0.000000, 0.000000, 2.000000, 2.000000), l(0.000000, 0.000000, -1.000000, -1.000000)
+          mad r12.w, cb1[0].x, cb5[87].w, r24.w
+          frc r12.w, r12.w
+          add r14.x, r24.z, r12.w
+          add r14.x, r14.x, l(-1.000000)
+          mad r7.y, r7.y, l(0.800000), l(0.200000)
+          add_sat r12.w, -r12.w, r7.y
+          mul r12.w, r24.z, r12.w
+          mul r14.x, r14.x, l(9.000000)
+          max r14.x, r14.x, l(0.000000)
+          min r14.x, r14.x, l(3.000000)
+          mul r14.x, r14.x, l(3.141500)
+          sincos r14.x, null, r14.x
+          mul r12.w, r12.w, r14.x
+          mul r16.zw, r12.wwww, r16.zzzw
+          add r15.yw, r15.yyyw, l(0.000000, 0.250000, 0.000000, 0.250000)
+          sample_l r22.xyzw, r15.ywyy, t18.xyzw, s9, r22.w
+          mad r15.yw, r22.xxxy, l(0.000000, 2.000000, 0.000000, 2.000000), l(0.000000, -1.000000, 0.000000, -1.000000)
+          mad r12.w, cb1[0].x, cb5[87].w, r22.w
+          frc r12.w, r12.w
+          add r14.x, r22.z, r12.w
+          add r14.x, r14.x, l(-1.000000)
+          add_sat r7.y, r7.y, -r12.w
+          mul r7.y, r22.z, r7.y
+          mul r12.w, r14.x, l(9.000000)
+          max r12.w, r12.w, l(0.000000)
+          min r12.w, r12.w, l(3.000000)
+          mul r12.w, r12.w, l(3.141500)
+          sincos r12.w, null, r12.w
+          mul r7.y, r7.y, r12.w
+          mul r15.yw, r7.yyyy, r15.yyyw
+          mul r15.yw, r15.yyyw, l(0.000000, 0.350000, 0.000000, 0.350000)
+          mad r15.yw, r16.zzzw, l(0.000000, 0.350000, 0.000000, 0.350000), r15.yyyw
+          mul r7.y, r9.x, l(4.000000)
+          add r9.x, -r6.w, l(1.000000)
+          mad r6.w, r23.x, r9.x, r6.w
+          mul r6.w, r6.w, r7.y
+          mad r15.yw, r15.yyyw, r6.wwww, r21.xxxy
+          mul r14.xy, r14.yyyy, r15.ywyy
+          max r6.w, r14.z, r23.x
+          mad r17.xy, r14.xyxx, r6.wwww, r17.xyxx
+        else
+          mov r20.xyz, l(1.000000,1.000000,1.000000,0)
+          mov r16.xy, l(0,0,0,0)
+          mov r23.x, l(0)
+          mov r7.x, l(0)
+          mov r21.z, l(0)
+          mov r15.yzw, l(0,0,0,0)
+        endif
+        frc r14.xy, r17.xyxx
+        mad r14.xy, r14.xyxx, r11.wwww, r8.yyyy
+        add r16.zw, r14.xxxy, l(0.000000, 0.000000, 0.500000, 0.000000)
+        add r22.xyz, r14.xyxx, l(0.000000, 0.500000, 0.500000, 0.000000)
+        sample_l r24.xyzw, r14.xyxx, t6.xyzw, s4, r12.z
+        sample_l r25.xyzw, r16.zwzz, t6.xyzw, s4, r12.z
+        mul r14.xyz, r4.yyyy, r25.xyzx
+        mad r14.xyz, r4.xxxx, r24.xyzx, r14.xyzx
+        sample_l r26.xyzw, r22.xyxx, t6.xyzw, s4, r12.z
+        mad r14.xyz, r4.zzzz, r26.xyzx, r14.xyzx
+        sample_l r22.xyzw, r22.zyzz, t6.xyzw, s4, r12.z
+        mad r14.xyz, r4.wwww, r22.xyzx, r14.xyzx
+        mov r22.x, r24.w
+        mov r22.y, r25.w
+        mov r22.z, r26.w
+        dp4 r6.w, r22.xyzw, r4.xyzw
+        dp4 r7.y, r4.xyzw, cb5[176].xyzw
+        dp4 r8.y, r4.xyzw, cb5[178].xyzw
+        dp4 r9.x, r4.xyzw, cb5[174].xyzw
+        add r8.y, -r7.y, r8.y
+        mad r6.w, r6.w, r8.y, r7.y
+        dp3 r7.y, r14.xyzx, l(0.333330, 0.333330, 0.333330, 0.000000)
+        dp4 r8.y, r4.xyzw, cb5[16].xyzw
+        add r14.xyz, -r7.yyyy, r14.xyzx
+        mad r14.xyz, r8.yyyy, r14.xyzx, r7.yyyy
+        dp4 r7.y, r4.xyzw, cb5[15].xyzw
+        mul r14.xyz, r7.yyyy, r14.xyzx
+        mad r12.zw, r7.zzzz, l(0.000000, 0.000000, 0.500000, 0.500000), cb5[75].yyyw
+        sample_l r22.xyzw, r17.xyxx, t9.xyzw, s5, r12.z
+        sample_l r24.xyzw, r17.xyxx, t10.xyzw, s5, r12.z
+        mul r24.xyzw, r4.zzww, r24.xyzw
+        mad r22.xyzw, r22.xyzw, r4.xxyy, r24.xyzw
+        add r16.zw, r22.zzzw, r22.xxxy
+        mad r16.zw, r16.zzzw, l(0.000000, 0.000000, 2.000000, 2.000000), l(0.000000, 0.000000, -1.000000, -1.000000)
+        mul r22.xy, r5.wwww, r16.zwzz
+        dp2 r7.y, r22.xyxx, r22.xyxx
+        min r7.y, r7.y, l(1.000000)
+        add r7.y, -r7.y, l(1.000000)
+        sqrt r22.z, r7.y
+        mul r7.y, r11.z, r16.x
+        mad_sat r8.y, r6.w, l(2.000000), l(-1.000000)
+        add r8.y, -r8.y, l(1.000000)
+        mad_sat r11.w, r6.z, l(2.000000), l(-0.400000)
+        add r15.z, -r15.z, l(1.000000)
+        mad r7.z, r7.z, l(0.500000), cb5[76].x
+        mul_sat r7.z, r7.z, l(0.250000)
+        add r7.z, -r7.z, l(1.000000)
+        min r7.z, r5.w, r7.z
+        add r16.x, -r15.z, l(1.000000)
+        mad r7.z, r7.z, r16.x, r15.z
+        mad r15.z, r16.y, r11.z, -r7.y
+        mad r7.y, r23.x, r15.z, r7.y
+        mad r7.y, r7.y, r7.z, -r6.w
+        mad r7.y, r11.w, r7.y, r6.w
+        max r13.w, r6.w, r7.y
+        dp4 r6.w, r4.xyzw, cb5[109].xyzw
+        add r6.w, -r9.x, r6.w
+        mad r6.w, r11.w, r6.w, r9.x
+        max r15.x, r6.w, r9.x
+        mad r16.xyz, r14.xyzx, r14.xyzx, l(0.001000, 0.001000, 0.001000, 0.000000)
+        dp3 r6.w, r14.xyzx, l(1.000000, 1.000000, 1.000000, 0.000000)
+        dp3 r7.y, r16.xyzx, l(1.000000, 1.000000, 1.000000, 0.000000)
+        div r6.w, r6.w, r7.y
+        add r7.y, -r12.x, l(2.000000)
+        mul_sat r6.z, r6.z, r7.y
+        mul r7.y, r8.y, l(0.500000)
+        mul r7.y, r6.z, r7.y
+        mad r16.xyz, r16.xyzx, r6.wwww, -r14.xyzx
+        mad r14.xyz, r7.yyyy, r16.xyzx, r14.xyzx
+        mul r6.z, r6.z, cb5[88].x
+        mad r6.w, r8.y, l(0.500000), l(0.500000)
+        mad r6.z, -r6.z, r6.w, l(1.000000)
+        mul r14.xyz, r6.zzzz, r14.xyzx
+        mul r6.z, r23.x, r23.x
+        add r16.xyz, r20.xyzx, l(-1.000000, -1.000000, -1.000000, 0.000000)
+        mad r16.xyz, r6.zzzz, r16.xyzx, l(1.000000, 1.000000, 1.000000, 0.000000)
+        mul r24.xyz, r14.xyzx, r16.xyzx
+        mad r14.xyz, -r14.xyzx, r16.xyzx, r20.xyzx
+        mad r19.xyz, r21.zzzz, r14.xyzx, r24.xyzx
+        mul r6.z, r23.x, l(0.700000)
+        max r6.z, r21.z, r6.z
+        max r6.z, r6.z, r7.x
+        add r14.xyz, -r22.xyzx, l(0.000000, 0.000000, 1.000000, 0.000000)
+        mad r14.xyz, r6.zzzz, r14.xyzx, r22.xyzx
+        add r14.xy, r15.ywyy, r14.xyxx
+        mul r6.zw, r17.xxxy, cb5[140].xxxx
+        sample_l r16.xyzw, r6.zwzz, t12.xyzw, s7, r12.w
+        mad r6.zw, r16.xxxy, l(0.000000, 0.000000, 4.000000, 4.000000), l(0.000000, 0.000000, -2.000000, -2.000000)
+        dp3 r7.y, l(0.800000, 0.800000, 0.800000, 0.000000), r19.xyzx
+        add r7.y, r7.y, l(0.400000)
+        mad r16.xy, r6.zwzz, r7.yyyy, r14.xyxx
+        dp2 r6.z, r16.xyxx, r16.xyxx
+        min r6.z, r6.z, l(1.000000)
+        add r6.z, -r6.z, l(1.000000)
+        sqrt r16.z, r6.z
+        dp3 r6.z, r16.xyzx, r16.xyzx
+        rsq r6.z, r6.z
+        dp4 r6.w, r4.xyzw, cb5[146].xyzw
+        mul r6.w, r5.w, r6.w
+        add r7.x, -r7.x, l(1.000000)
+        mul r6.w, r6.w, r7.x
+        mad r7.xyz, r16.xyzx, r6.zzzz, -r14.xyzx
+        mad r18.xyw, r6.wwww, r7.xyxz, r14.xyxz
+        add r6.z, -cb5[184].y, l(1.000000)
+        mul r7.z, r6.z, v6.z
+        mov r7.xy, v6.xyxx
+        dp3 r6.z, r7.xyzx, r7.xyzx
+        rsq r6.z, r6.z
+        mul r16.xyz, r6.zzzz, r7.xyzx
+        max r6.z, r9.y, l(0.001000)
+        div r16.w, r16.z, r6.z
+        exp r6.z, r12.z
+        mul r6.z, r6.z, cb5[66].x
+        mul r6.z, r6.z, cb5[74].x
+        dp2 r6.w, r16.xyxx, r16.xyxx
+        sqrt r6.w, r6.w
+        div r6.z, r6.z, r6.w
+        mul r7.xyz, r16.xywx, cb5[66].xxxx
+        mad r7.xyz, r7.xyzx, l(2.000000, 2.000000, 2.000000, 0.000000), r17.xyzx
+        mov r14.xyz, r7.xyzx
+        mov r6.w, l(0)
+        mov r8.y, l(0)
+        loop
+          itof r9.x, r8.y
+          ge r9.x, r9.x, cb5[73].w
+          breakc_nz r9.x
+          mad r14.xyz, r16.xywx, r6.zzzz, r14.xyzx
+          sample_l r17.xyzw, r14.xyxx, t14.xyzw, s8, r12.z
+          dp4 r9.x, r4.xyzw, r17.xyzw
+          ge r9.x, r9.x, r14.z
+          if_nz r9.x
+            mov r6.w, l(-1)
+            break
+          endif
+          iadd r8.y, r8.y, l(1)
+          mov r6.w, r9.x
+        endloop
+        movc r6.z, r6.w, l(0), cb5[74].y
+        add r6.w, -cb5[74].y, l(1.000000)
+        add r6.z, r6.w, r6.z
+        mad_sat r5.w, r5.w, l(4.000000), l(-1.000000)
+        mul r5.w, r10.w, r5.w
+        add r6.z, r6.z, l(-1.000000)
+        mad r5.w, r5.w, r6.z, l(1.000000)
+        add r6.z, -r5.w, l(1.000000)
+        mad r9.w, r21.z, r6.z, r5.w
+      endif
+    endif
+  else
+    mul r5.w, cb5[67].x, l(16.000000)
+    mad r6.z, cb5[67].x, l(-32.000000), l(0.500000)
+    min r6.w, r11.y, l(6.000000)
+    exp r6.w, r6.w
+    mul r7.x, r6.w, cb5[67].x
+    mad r6.z, -r6.w, cb5[67].x, r6.z
+    mad r5.w, r7.x, l(0.500000), r5.w
+    frc r6.xy, r6.xyxx
+    mad r6.xy, r6.xyxx, r6.zzzz, r5.wwww
+    add r6.zw, r6.xxxy, l(0.000000, 0.000000, 0.500000, 0.000000)
+    add r7.xyz, r6.xyxx, l(0.000000, 0.500000, 0.500000, 0.000000)
+    lt r5.w, l(0.010000), r5.z
+    lt r8.y, l(0.010000), r7.w
+    and r5.w, r5.w, r8.y
+    if_nz r5.w
+      mad r16.xyzw, cb5[63].xyzw, r2.wwww, r11.yyyy
+      min r16.xyzw, r16.xyzw, l(6.000000, 6.000000, 6.000000, 6.000000)
+      sample_l r17.xyzw, r6.xyxx, t5.xyzw, s4, r16.x
+      sample_l r20.xyzw, r6.zwzz, t5.xyzw, s4, r16.y
+      mul r14.xyz, r3.yyyy, r20.xyzx
+      mad r14.xyz, r3.xxxx, r17.xyzx, r14.xyzx
+      sample_l r22.xyzw, r7.xyxx, t5.xyzw, s4, r16.z
+      mad r14.xyz, r3.zzzz, r22.xyzx, r14.xyzx
+      sample_l r24.xyzw, r7.zyzz, t5.xyzw, s4, r16.w
+      mad r14.xyz, r3.wwww, r24.xyzx, r14.xyzx
+      mov r24.x, r17.w
+      mov r24.y, r20.w
+      mov r24.z, r22.w
+      dp4 r5.w, r24.xyzw, r3.xyzw
+      sample_l r17.xyzw, r6.xyxx, t6.xyzw, s4, r16.x
+      mad r14.xyz, r4.xxxx, r17.xyzx, r14.xyzx
+      sample_l r20.xyzw, r6.zwzz, t6.xyzw, s4, r16.y
+      mad r14.xyz, r4.yyyy, r20.xyzx, r14.xyzx
+      sample_l r22.xyzw, r7.xyxx, t6.xyzw, s4, r16.z
+      mad r14.xyz, r4.zzzz, r22.xyzx, r14.xyzx
+      sample_l r16.xyzw, r7.zyzz, t6.xyzw, s4, r16.w
+      mad r14.xyz, r4.wwww, r16.xyzx, r14.xyzx
+      mov r16.x, r17.w
+      mov r16.y, r20.w
+      mov r16.z, r22.w
+      dp4 r8.y, r16.xyzw, r4.xyzw
+      add r5.w, r5.w, r8.y
+      dp4 r8.y, r3.xyzw, cb5[175].xyzw
+      dp4 r9.x, r4.xyzw, cb5[176].xyzw
+      add r8.y, r8.y, r9.x
+      dp4 r9.x, r3.xyzw, cb5[177].xyzw
+      dp4 r9.y, r4.xyzw, cb5[178].xyzw
+      add r9.x, r9.y, r9.x
+      dp4 r9.y, r3.xyzw, cb5[173].xyzw
+      dp4 r10.w, r4.xyzw, cb5[174].xyzw
+      add r9.y, r9.y, r10.w
+      add r9.x, -r8.y, r9.x
+      mad r5.w, r5.w, r9.x, r8.y
+      dp3 r8.y, r14.xyzx, l(0.333330, 0.333330, 0.333330, 0.000000)
+      dp4 r9.x, r3.xyzw, cb5[12].xyzw
+      dp4 r10.w, r4.xyzw, cb5[16].xyzw
+      add r9.x, r9.x, r10.w
+      add r14.xyz, -r8.yyyy, r14.xyzx
+      mad r14.xyz, r9.xxxx, r14.xyzx, r8.yyyy
+      dp4 r8.y, r3.xyzw, cb5[11].xyzw
+      dp4 r9.x, r4.xyzw, cb5[15].xyzw
+      add r8.y, r8.y, r9.x
+      mul r14.xyz, r8.yyyy, r14.xyzx
+      dp4 r8.y, r3.xyzw, cb5[90].xyzw
+      dp4 r9.x, r4.xyzw, cb5[91].xyzw
+      add r8.y, r8.y, r9.x
+      dp4 r9.x, r3.xyzw, cb5[92].xyzw
+      dp4 r10.w, r4.xyzw, cb5[93].xyzw
+      add r9.x, r9.x, r10.w
+      add r10.w, -r8.w, l(1.000000)
+      mul r9.x, r9.x, r10.w
+      dp4 r10.w, r3.xyzw, cb5[94].xyzw
+      dp4 r11.w, r4.xyzw, cb5[95].xyzw
+      add r10.w, r10.w, r11.w
+      dp4 r11.w, r3.xyzw, cb5[96].xyzw
+      dp4 r12.z, r4.xyzw, cb5[97].xyzw
+      add r11.w, r11.w, r12.z
+      add r12.z, -r14.w, l(1.000000)
+      mad r12.w, -r8.y, cb5[84].x, l(1.000000)
+      mad r12.z, -r12.x, r12.w, r12.z
+      add_sat r12.z, r12.z, r12.z
+      mul r12.z, r12.z, cb5[84].x
+      mul r16.y, r8.y, r12.z
+      lt r8.y, l(0.000000), r16.y
+      lt r12.z, l(0.000000), r12.y
+      or r8.y, r8.y, r12.z
+      dp4 r12.z, r3.xyzw, cb5[106].xyzw
+      dp4 r12.w, r4.xyzw, cb5[107].xyzw
+      add r17.z, r12.w, r12.z
+      dp4 r12.z, r3.xyzw, cb5[112].xyzw
+      dp4 r12.w, r4.xyzw, cb5[113].xyzw
+      add r20.y, r12.w, r12.z
+      dp4 r12.z, r3.xyzw, cb5[110].xyzw
+      dp4 r12.w, r4.xyzw, cb5[111].xyzw
+      add r17.w, r12.w, r12.z
+      dp4 r12.z, r3.xyzw, cb5[116].xyzw
+      dp4 r12.w, r4.xyzw, cb5[117].xyzw
+      add r22.x, r12.w, r12.z
+      dp4 r12.z, r3.xyzw, cb5[118].xyzw
+      dp4 r12.w, r4.xyzw, cb5[119].xyzw
+      add r22.y, r12.w, r12.z
+      dp4 r12.z, r3.xyzw, cb5[120].xyzw
+      dp4 r12.w, r4.xyzw, cb5[121].xyzw
+      add r22.z, r12.w, r12.z
+      dp4 r12.z, r3.xyzw, cb5[122].xyzw
+      dp4 r12.w, r4.xyzw, cb5[123].xyzw
+      add r12.z, r12.w, r12.z
+      mul_sat r10.w, r8.z, r10.w
+      add_sat r12.w, r16.y, r16.y
+      add r15.y, r12.w, l(-1.000000)
+      add r10.w, -r10.w, r15.y
+      add r10.w, r10.w, r10.w
+      mad r9.x, r9.x, r11.z, r10.w
+      max r9.x, r9.x, l(0.000000)
+      min r9.x, r9.x, l(2.000000)
+      add r10.w, -r12.w, l(1.000000)
+      mul r10.w, r9.z, r10.w
+      mad_sat r10.w, -r10.w, l(0.250000), r12.w
+      add r12.w, -r9.z, l(1.000000)
+      mul r12.w, r12.x, r12.w
+      mad r12.w, -r12.w, l(0.500000), -r9.z
+      mad r15.y, r12.y, l(2.000000), r12.w
+      mul_sat r15.y, r11.w, r15.y
+      add r9.x, r9.x, r12.w
+      mul_sat r9.x, r11.w, r9.x
+      mul r11.w, r12.x, l(0.200000)
+      mad r11.w, r12.z, l(0.800000), r11.w
+      max r12.z, r15.y, r9.x
+      mul r20.x, r11.w, r12.z
+      mul r11.w, r15.y, r15.y
+      mul r9.x, r9.x, r9.x
+      max r17.x, r11.w, r9.x
+      max r17.y, r10.w, r11.w
+      mov r16.xzw, l(0,0,0,0)
+      movc r23.xyzw, r8.yyyy, r17.xyzw, r16.xyzw
+      movc r15.yzw, r8.yyyy, r22.xxyz, l(0,1.000000,1.000000,1.000000)
+      and r21.zw, r8.yyyy, r20.xxxy
+      mul r8.y, r11.z, r23.z
+      mad_sat r9.x, r5.w, l(2.000000), l(-1.000000)
+      add r9.x, -r9.x, l(1.000000)
+      mad_sat r10.w, r23.y, l(2.000000), l(-0.400000)
+      add r11.w, -r21.w, l(1.000000)
+      mad r12.z, r23.w, r11.z, -r8.y
+      mad r8.y, r23.x, r12.z, r8.y
+      mad r8.y, r8.y, r11.w, -r5.w
+      mad r8.y, r10.w, r8.y, r5.w
+      max r13.w, r5.w, r8.y
+      dp4 r5.w, r3.xyzw, cb5[108].xyzw
+      dp4 r8.y, r4.xyzw, cb5[109].xyzw
+      add r5.w, r5.w, r8.y
+      add r5.w, -r9.y, r5.w
+      mad r5.w, r10.w, r5.w, r9.y
+      max r15.x, r5.w, r9.y
+      mad r16.xyz, r14.xyzx, r14.xyzx, l(0.001000, 0.001000, 0.001000, 0.000000)
+      dp3 r5.w, r14.xyzx, l(1.000000, 1.000000, 1.000000, 0.000000)
+      dp3 r8.y, r16.xyzx, l(1.000000, 1.000000, 1.000000, 0.000000)
+      div r5.w, r5.w, r8.y
+      add r8.y, -r12.x, l(2.000000)
+      mul_sat r8.y, r8.y, r23.y
+      mul r9.y, r9.x, l(0.500000)
+      mul r9.y, r8.y, r9.y
+      mad r16.xyz, r16.xyzx, r5.wwww, -r14.xyzx
+      mad r14.xyz, r9.yyyy, r16.xyzx, r14.xyzx
+      mul r5.w, r8.y, cb5[88].x
+      mad r8.y, r9.x, l(0.500000), l(0.500000)
+      mad r5.w, -r5.w, r8.y, l(1.000000)
+      mul r14.xyz, r5.wwww, r14.xyzx
+      mul r5.w, r23.x, r23.x
+      add r16.xyz, r15.yzwy, l(-1.000000, -1.000000, -1.000000, 0.000000)
+      mad r16.xyz, r5.wwww, r16.xyzx, l(1.000000, 1.000000, 1.000000, 0.000000)
+      mul r17.xyz, r14.xyzx, r16.xyzx
+      mad r14.xyz, -r14.xyzx, r16.xyzx, r15.yzwy
+      mad r19.xyz, r21.zzzz, r14.xyzx, r17.xyzx
+    else
+      lt r5.z, r7.w, r5.z
+      if_nz r5.z
+        mad r16.xyzw, cb5[63].xyzw, r2.wwww, r11.yyyy
+        min r16.xyzw, r16.xyzw, l(6.000000, 6.000000, 6.000000, 6.000000)
+        sample_l r17.xyzw, r6.xyxx, t5.xyzw, s4, r16.x
+        sample_l r20.xyzw, r6.zwzz, t5.xyzw, s4, r16.y
+        mul r14.xyz, r3.yyyy, r20.xyzx
+        mad r14.xyz, r3.xxxx, r17.xyzx, r14.xyzx
+        sample_l r22.xyzw, r7.xyxx, t5.xyzw, s4, r16.z
+        mad r14.xyz, r3.zzzz, r22.xyzx, r14.xyzx
+        sample_l r16.xyzw, r7.zyzz, t5.xyzw, s4, r16.w
+        mad r14.xyz, r3.wwww, r16.xyzx, r14.xyzx
+        mov r16.x, r17.w
+        mov r16.y, r20.w
+        mov r16.z, r22.w
+        dp4 r5.z, r16.xyzw, r3.xyzw
+        dp4 r5.w, r3.xyzw, cb5[182].xyzw
+        mul r5.w, r5.w, r5.z
+        mul_sat r7.w, r11.y, l(0.200000)
+        mad_sat r5.z, -r5.w, r7.w, r5.z
+        dp4 r5.w, r3.xyzw, cb5[175].xyzw
+        dp4 r7.w, r3.xyzw, cb5[177].xyzw
+        dp4 r8.y, r3.xyzw, cb5[173].xyzw
+        add r7.w, -r5.w, r7.w
+        mad r5.z, r5.z, r7.w, r5.w
+        dp3 r5.w, r14.xyzx, l(0.333330, 0.333330, 0.333330, 0.000000)
+        dp4 r7.w, r3.xyzw, cb5[12].xyzw
+        add r14.xyz, -r5.wwww, r14.xyzx
+        mad r14.xyz, r7.wwww, r14.xyzx, r5.wwww
+        dp4 r5.w, r3.xyzw, cb5[11].xyzw
+        mul r14.xyz, r5.wwww, r14.xyzx
+        dp4 r5.w, r3.xyzw, cb5[90].xyzw
+        dp4 r7.w, r3.xyzw, cb5[92].xyzw
+        add r9.x, -r8.w, l(1.000000)
+        mul r7.w, r7.w, r9.x
+        dp4 r9.x, r3.xyzw, cb5[94].xyzw
+        dp4 r9.y, r3.xyzw, cb5[96].xyzw
+        add r10.w, -r14.w, l(1.000000)
+        mad r11.w, -r5.w, cb5[84].x, l(1.000000)
+        mad r10.w, -r12.x, r11.w, r10.w
+        add_sat r10.w, r10.w, r10.w
+        mul r10.w, r10.w, cb5[84].x
+        mul r16.y, r5.w, r10.w
+        lt r5.w, l(0.000000), r16.y
+        lt r10.w, l(0.000000), r12.y
+        or r5.w, r5.w, r10.w
+        dp4 r17.z, r3.xyzw, cb5[106].xyzw
+        dp4 r20.y, r3.xyzw, cb5[112].xyzw
+        dp4 r17.w, r3.xyzw, cb5[110].xyzw
+        dp4 r22.x, r3.xyzw, cb5[116].xyzw
+        dp4 r22.y, r3.xyzw, cb5[118].xyzw
+        dp4 r22.z, r3.xyzw, cb5[120].xyzw
+        dp4 r10.w, r3.xyzw, cb5[122].xyzw
+        mul_sat r9.x, r8.z, r9.x
+        add_sat r11.w, r16.y, r16.y
+        add r12.z, r11.w, l(-1.000000)
+        add r9.x, -r9.x, r12.z
+        add r9.x, r9.x, r9.x
+        mad r7.w, r7.w, r11.z, r9.x
+        max r7.w, r7.w, l(0.000000)
+        min r7.w, r7.w, l(2.000000)
+        add r9.x, -r11.w, l(1.000000)
+        mul r9.x, r9.z, r9.x
+        mad_sat r9.x, -r9.x, l(0.250000), r11.w
+        add r11.w, -r9.z, l(1.000000)
+        mul r11.w, r12.x, r11.w
+        mad r11.w, -r11.w, l(0.500000), -r9.z
+        mad r12.z, r12.y, l(2.000000), r11.w
+        mul_sat r12.z, r9.y, r12.z
+        add r7.w, r7.w, r11.w
+        mul_sat r7.w, r9.y, r7.w
+        mul r9.y, r12.x, l(0.200000)
+        mad r9.y, r10.w, l(0.800000), r9.y
+        max r10.w, r12.z, r7.w
+        mul r20.x, r9.y, r10.w
+        mul r9.y, r12.z, r12.z
+        mul r7.w, r7.w, r7.w
+        max r17.x, r9.y, r7.w
+        max r17.y, r9.y, r9.x
+        mov r16.xzw, l(0,0,0,0)
+        movc r23.xyzw, r5.wwww, r17.xyzw, r16.xyzw
+        movc r15.yzw, r5.wwww, r22.xxyz, l(0,1.000000,1.000000,1.000000)
+        and r21.zw, r5.wwww, r20.xxxy
+        mul r5.w, r11.z, r23.z
+        mad_sat r7.w, r5.z, l(2.000000), l(-1.000000)
+        add r7.w, -r7.w, l(1.000000)
+        mad_sat r9.x, r23.y, l(2.000000), l(-0.400000)
+        add r9.y, -r21.w, l(1.000000)
+        mad r10.w, r23.w, r11.z, -r5.w
+        mad r5.w, r23.x, r10.w, r5.w
+        mad r5.w, r5.w, r9.y, -r5.z
+        mad r5.w, r9.x, r5.w, r5.z
+        max r13.w, r5.w, r5.z
+        dp4 r5.z, r3.xyzw, cb5[108].xyzw
+        add r5.z, -r8.y, r5.z
+        mad r5.z, r9.x, r5.z, r8.y
+        max r15.x, r5.z, r8.y
+        mad r16.xyz, r14.xyzx, r14.xyzx, l(0.001000, 0.001000, 0.001000, 0.000000)
+        dp3 r5.z, r14.xyzx, l(1.000000, 1.000000, 1.000000, 0.000000)
+        dp3 r5.w, r16.xyzx, l(1.000000, 1.000000, 1.000000, 0.000000)
+        div r5.z, r5.z, r5.w
+        add r5.w, -r12.x, l(2.000000)
+        mul_sat r5.w, r5.w, r23.y
+        mul r8.y, r7.w, l(0.500000)
+        mul r8.y, r5.w, r8.y
+        mad r16.xyz, r16.xyzx, r5.zzzz, -r14.xyzx
+        mad r14.xyz, r8.yyyy, r16.xyzx, r14.xyzx
+        mul r5.z, r5.w, cb5[88].x
+        mad r5.w, r7.w, l(0.500000), l(0.500000)
+        mad r5.z, -r5.z, r5.w, l(1.000000)
+        mul r14.xyz, r5.zzzz, r14.xyzx
+        mul r5.z, r23.x, r23.x
+        add r16.xyz, r15.yzwy, l(-1.000000, -1.000000, -1.000000, 0.000000)
+        mad r16.xyz, r5.zzzz, r16.xyzx, l(1.000000, 1.000000, 1.000000, 0.000000)
+        mul r17.xyz, r14.xyzx, r16.xyzx
+        mad r14.xyz, -r14.xyzx, r16.xyzx, r15.yzwy
+        mad r19.xyz, r21.zzzz, r14.xyzx, r17.xyzx
+      else
+        mad r16.xyzw, cb5[64].xyzw, r2.wwww, r11.yyyy
+        min r16.xyzw, r16.xyzw, l(6.000000, 6.000000, 6.000000, 6.000000)
+        sample_l r17.xyzw, r6.xyxx, t6.xyzw, s4, r16.x
+        sample_l r6.xyzw, r6.zwzz, t6.xyzw, s4, r16.y
+        mul r6.xyz, r4.yyyy, r6.xyzx
+        mad r6.xyz, r4.xxxx, r17.xyzx, r6.xyzx
+        sample_l r20.xyzw, r7.xyxx, t6.xyzw, s4, r16.z
+        mad r6.xyz, r4.zzzz, r20.xyzx, r6.xyzx
+        sample_l r7.xyzw, r7.zyzz, t6.xyzw, s4, r16.w
+        mad r6.xyz, r4.wwww, r7.xyzx, r6.xyzx
+        mov r7.x, r17.w
+        mov r7.y, r6.w
+        mov r7.z, r20.w
+        dp4 r5.z, r7.xyzw, r4.xyzw
+        dp4 r5.w, r4.xyzw, cb5[176].xyzw
+        dp4 r6.w, r4.xyzw, cb5[178].xyzw
+        dp4 r7.x, r4.xyzw, cb5[174].xyzw
+        add r6.w, -r5.w, r6.w
+        mad r5.z, r5.z, r6.w, r5.w
+        dp3 r5.w, r6.xyzx, l(0.333330, 0.333330, 0.333330, 0.000000)
+        dp4 r6.w, r4.xyzw, cb5[16].xyzw
+        add r6.xyz, -r5.wwww, r6.xyzx
+        mad r6.xyz, r6.wwww, r6.xyzx, r5.wwww
+        dp4 r5.w, r4.xyzw, cb5[15].xyzw
+        mul r6.xyz, r5.wwww, r6.xyzx
+        dp4 r5.w, r4.xyzw, cb5[91].xyzw
+        dp4 r6.w, r4.xyzw, cb5[93].xyzw
+        add r7.y, -r8.w, l(1.000000)
+        mul r6.w, r6.w, r7.y
+        dp4 r7.y, r4.xyzw, cb5[95].xyzw
+        dp4 r7.z, r4.xyzw, cb5[97].xyzw
+        add r7.w, -r14.w, l(1.000000)
+        mad r8.y, -r5.w, cb5[84].x, l(1.000000)
+        mad r7.w, -r12.x, r8.y, r7.w
+        add_sat r7.w, r7.w, r7.w
+        mul r7.w, r7.w, cb5[84].x
+        mul r14.y, r5.w, r7.w
+        lt r5.w, l(0.000000), r14.y
+        lt r7.w, l(0.000000), r12.y
+        or r5.w, r5.w, r7.w
+        dp4 r16.z, r4.xyzw, cb5[107].xyzw
+        dp4 r9.y, r4.xyzw, cb5[113].xyzw
+        dp4 r16.w, r4.xyzw, cb5[111].xyzw
+        dp4 r17.x, r4.xyzw, cb5[117].xyzw
+        dp4 r17.y, r4.xyzw, cb5[119].xyzw
+        dp4 r17.z, r4.xyzw, cb5[121].xyzw
+        dp4 r7.w, r4.xyzw, cb5[123].xyzw
+        mul_sat r7.y, r7.y, r8.z
+        add_sat r8.y, r14.y, r14.y
+        add r8.z, r8.y, l(-1.000000)
+        add r7.y, -r7.y, r8.z
+        add r7.y, r7.y, r7.y
+        mad r6.w, r6.w, r11.z, r7.y
+        max r6.w, r6.w, l(0.000000)
+        min r6.w, r6.w, l(2.000000)
+        add r7.y, -r8.y, l(1.000000)
+        mul r7.y, r9.z, r7.y
+        mad_sat r7.y, -r7.y, l(0.250000), r8.y
+        add r8.y, -r9.z, l(1.000000)
+        mul r8.y, r12.x, r8.y
+        mad r8.y, -r8.y, l(0.500000), -r9.z
+        mad r8.z, r12.y, l(2.000000), r8.y
+        mul_sat r8.z, r7.z, r8.z
+        add r6.w, r6.w, r8.y
+        mul_sat r6.w, r7.z, r6.w
+        mul r7.z, r12.x, l(0.200000)
+        mad r7.z, r7.w, l(0.800000), r7.z
+        max r7.w, r8.z, r6.w
+        mul r9.x, r7.w, r7.z
+        mul r7.z, r8.z, r8.z
+        mul r6.w, r6.w, r6.w
+        max r16.x, r7.z, r6.w
+        max r16.y, r7.z, r7.y
+        mov r14.xzw, l(0,0,0,0)
+        movc r23.xyzw, r5.wwww, r16.xyzw, r14.xyzw
+        movc r7.yzw, r5.wwww, r17.xxyz, l(0,1.000000,1.000000,1.000000)
+        and r21.zw, r5.wwww, r9.xxxy
+        mul r5.w, r11.z, r23.z
+        mad_sat r6.w, r5.z, l(2.000000), l(-1.000000)
+        add r6.w, -r6.w, l(1.000000)
+        mad_sat r8.y, r23.y, l(2.000000), l(-0.400000)
+        add r8.z, -r21.w, l(1.000000)
+        mad r8.w, r23.w, r11.z, -r5.w
+        mad r5.w, r23.x, r8.w, r5.w
+        mad r5.w, r5.w, r8.z, -r5.z
+        mad r5.w, r8.y, r5.w, r5.z
+        max r13.w, r5.w, r5.z
+        dp4 r5.z, r4.xyzw, cb5[109].xyzw
+        add r5.z, -r7.x, r5.z
+        mad r5.z, r8.y, r5.z, r7.x
+        max r15.x, r5.z, r7.x
+        mad r8.yzw, r6.xxyz, r6.xxyz, l(0.000000, 0.001000, 0.001000, 0.001000)
+        dp3 r5.z, r6.xyzx, l(1.000000, 1.000000, 1.000000, 0.000000)
+        dp3 r5.w, r8.yzwy, l(1.000000, 1.000000, 1.000000, 0.000000)
+        div r5.z, r5.z, r5.w
+        add r5.w, -r12.x, l(2.000000)
+        mul_sat r5.w, r5.w, r23.y
+        mul r7.x, r6.w, l(0.500000)
+        mul r7.x, r5.w, r7.x
+        mad r8.yzw, r8.yyzw, r5.zzzz, -r6.xxyz
+        mad r6.xyz, r7.xxxx, r8.yzwy, r6.xyzx
+        mul r5.z, r5.w, cb5[88].x
+        mad r5.w, r6.w, l(0.500000), l(0.500000)
+        mad r5.z, -r5.z, r5.w, l(1.000000)
+        mul r6.xyz, r5.zzzz, r6.xyzx
+        mul r5.z, r23.x, r23.x
+        add r8.yzw, r7.yyzw, l(0.000000, -1.000000, -1.000000, -1.000000)
+        mad r8.yzw, r5.zzzz, r8.yyzw, l(0.000000, 1.000000, 1.000000, 1.000000)
+        mul r9.xyz, r6.xyzx, r8.yzwy
+        mad r6.xyz, -r6.xyzx, r8.yzwy, r7.yzwy
+        mad r19.xyz, r21.zzzz, r6.xyzx, r9.xyzx
+      endif
+    endif
+    mov r18.xyw, l(0,0,0,1.000000)
+    mov r9.w, l(1.000000)
+  endif
+  dp4 r5.z, cb5[130].xyzw, r3.xyzw
+  dp4 r5.w, cb5[131].xyzw, r4.xyzw
+  add r5.z, r5.w, r5.z
+  add r13.z, r8.x, l(1.000000)
+  mul r6.xyz, r18.xywx, l(-1.000000, -1.000000, 1.000000, 0.000000)
+  dp3 r5.w, r13.xyzx, r6.xyzx
+  mul r6.xyz, r13.zzzz, r6.xyzx
+  mad r6.xyz, r13.xyzx, r5.wwww, -r6.xyzx
+  dp3 r5.w, r6.xyzx, r6.xyzx
+  rsq r5.w, r5.w
+  add r6.w, -cb5[129].w, l(1.000000)
+  mad r6.w, r2.w, r6.w, cb5[129].w
+  mul_sat r5.z, r5.z, r6.w
+  mad r6.xyz, r6.xyzx, r5.wwww, -r18.xywx
+  mad r6.xyz, r5.zzzz, r6.xyzx, r18.xywx
+  dp4 r5.z, r3.xyzw, cb5[61].xyzw
+  dp4 r5.w, r4.xyzw, cb5[62].xyzw
+  add r5.z, r5.w, r5.z
+  add_sat r5.z, r5.z, r13.w
+  add r2.w, -r2.w, l(1.000000)
+  mul r2.w, r2.w, r2.w
+  add r5.w, -r5.z, r13.w
+  mad r2.w, r2.w, r5.w, r5.z
+  dp4 r5.z, r3.xyzw, cb5[9].xyzw
+  dp4 r5.w, r4.xyzw, cb5[10].xyzw
+  add r5.z, r5.w, r5.z
+  mul r5.x, r5.z, r5.x
+  add r5.z, -r21.z, l(1.000000)
+  mul r5.x, r5.z, r5.x
+  mad r5.yzw, r10.xxyz, r5.yyyy, -r19.xxyz
+  mad r5.xyz, r5.xxxx, r5.yzwy, r19.xyzx
+  dp3 r5.w, r6.xyzx, r6.xyzx
+  rsq r5.w, r5.w
+  mul r6.xyz, r5.wwww, r6.xyzx
+  dp3 r7.x, v2.xyzx, r6.xyzx
+  dp3 r7.y, v3.xyzx, r6.xyzx
+  dp3 r7.z, v4.xyzx, r6.xyzx
+  mad r5.xyz, r7.xyzx, l(0.000100, 0.000100, 0.000100, 0.000000), r5.xyzx
+  dp4 r3.x, r3.xyzw, cb5[179].xyzw
+  dp4 r3.y, r4.xyzw, cb5[180].xyzw
+  add r3.x, r3.y, r3.x
+  mad r3.x, r11.x, r3.x, l(1.000000)
+  add r3.y, -r9.w, l(1.000000)
+  mad r3.y, r23.x, r3.y, r9.w
+  mul r4.xyz, v6.xyzx, l(0.000100, 0.000100, 0.000100, 0.000000)
+  mad r3.xzw, r5.xxyz, r3.xxxx, r4.xxyz
+else
+  mov r6.xyz, l(0,0,1.000000,0)
+  mov r15.x, l(0)
+  mov r2.w, l(0)
+  mov r3.xyzw, l(0,1.000000,0,0)
+endif
+mul r4.xyz, v5.yyyy, cb0[6].xyzx
+mad r4.xyz, cb0[5].xyzx, v5.xxxx, r4.xyzx
+mad r4.xyz, cb0[7].xyzx, v5.zzzz, r4.xyzx
+add r4.xyz, r4.xyzx, cb0[8].xyzx
+eq r4.w, cb4[0].x, l(1.000000)
+if_nz r4.w
+  eq r4.w, cb4[0].y, l(1.000000)
+  mul r5.xyz, v5.yyyy, cb4[2].xyzx
+  mad r5.xyz, cb4[1].xyzx, v5.xxxx, r5.xyzx
+  mad r5.xyz, cb4[3].xyzx, v5.zzzz, r5.xyzx
+  add r5.xyz, r5.xyzx, cb4[4].xyzx
+  movc r5.xyz, r4.wwww, r5.xyzx, v5.xyzx
+  add r5.xyz, r5.xyzx, -cb4[6].xyzx
+  mul r5.yzw, r5.xxyz, cb4[5].xxyz
+  mad r4.w, r5.y, l(0.250000), l(0.750000)
+  mad r5.y, cb4[0].z, l(0.500000), l(0.750000)
+  max r5.x, r4.w, r5.y
+  sample r5.xyzw, r5.xzwx, t2.xyzw, s0
+else
+  mov r5.xyzw, l(1.000000,1.000000,1.000000,1.000000)
+endif
+dp4_sat r4.w, r5.xyzw, cb2[46].xyzw
+dp3 r5.x, r4.xyzx, r4.xyzx
+sample r5.xyzw, r5.xxxx, t0.xyzw, s2
+sample r7.xyzw, r4.xyzx, t1.xyzw, s1
+mul r4.x, r5.x, r7.w
+mul r4.x, r4.w, r4.x
+dp3 r5.x, v2.xyzx, r6.xyzx
+dp3 r5.y, v3.xyzx, r6.xyzx
+dp3 r5.z, v4.xyzx, r6.xyzx
+dp3 r4.y, r5.xyzx, r5.xyzx
+rsq r4.y, r4.y
+mul r4.yzw, r4.yyyy, r5.xxyz
+mul r5.xyz, r4.xxxx, cb0[2].xyzx
+mul r6.xyz, cb0[4].xyzx, l(0.040000, 0.040000, 0.040000, 0.000000)
+mad r7.xyz, -cb0[4].xyzx, l(0.040000, 0.040000, 0.040000, 0.000000), r3.xzwx
+mad r6.xyz, r15.xxxx, r7.xyzx, r6.xyzx
+add r4.x, -r6.x, l(1.000000)
+mul r5.xyz, r3.yyyy, r5.xyzx
+mad r0.xyz, r0.xyzx, r0.wwww, r2.xyzx
+dp3 r0.w, r0.xyzx, r0.xyzx
+max r0.w, r0.w, l(0.001000)
+rsq r0.w, r0.w
+mul r0.xyz, r0.wwww, r0.xyzx
+dp3_sat r0.w, r4.yzwy, r1.xyzx
+dp3_sat r2.x, r4.yzwy, r0.xyzx
+dp3_sat r0.x, r1.xyzx, r0.xyzx
+add r0.y, -r2.w, l(1.000000)
+mul r0.z, r0.y, r0.y
+mul r1.x, r0.z, r0.z
+mul r1.y, r2.x, r2.x
+mad r0.z, r0.z, r0.z, l(-1.000000)
+mad r0.z, r1.y, r0.z, l(1.000010)
+mul r0.x, r0.x, r0.x
+max r0.x, r0.x, l(0.100000)
+mad r0.y, r0.y, r0.y, l(0.500000)
+mul r0.x, r0.y, r0.x
+mul r0.y, r0.z, r0.z
+mul r0.x, r0.y, r0.x
+mul r0.x, r0.x, l(4.000000)
+div r0.x, r1.x, r0.x
+mul r0.xyz, r6.xyzx, r0.xxxx
+mad r0.xyz, r3.xzwx, r4.xxxx, r0.xyzx
+mul r0.xyz, r5.xyzx, r0.xyzx
+mul r0.xyz, r0.wwww, r0.xyzx
+mad_sat r0.w, r1.w, cb3[1].z, cb3[1].w
+mul o0.xyz, r0.xyzx, r0.wwww
+mov o0.w, l(1.000000)
+ret
+// Approximately 0 instruction slots used

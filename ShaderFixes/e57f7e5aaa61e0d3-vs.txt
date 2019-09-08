@@ -1,0 +1,203 @@
+// asmtool.py -I ../.. --auto-fix-vertex-halo --fix-unusual-halo-with-inconsistent-w-optimisation --fix-unity-reflection --fix-unity-frustum-world --only-autofixed e57f7e5aaa61e0d3-vs.txt
+// 3DMigoto: e57f7e5aaa61e0d3 | Matched 32 variants of 1 shaders: Lux Water/WaterSurface
+//
+//              Unity headers extracted from Lux Water_WaterSurface
+//              Shader "Lux Water/WaterSurface" {
+//                CustomEditor "LuxWaterMaterialEditor"
+//                SubShader 1/1 {
+//                  LOD 200
+//                  Tags { "FORCENOSHADOWCASTING"="true" "QUEUE"="Transparent-1" "RenderType"="Opaque" }
+//                  Pass 3/4 {
+//                    Name "FORWARD"
+//                    Tags { "FORCENOSHADOWCASTING"="true" "LIGHTMODE"="FORWARDADD" "QUEUE"="Transparent-1" "RenderType"="Opaque" }
+//                    ZWrite Off
+//                    Program "vp" {
+//                      SubProgram "d3d11" {
+//                      }
+//                    }
+//                  }
+//                }
+//              }
+//
+//           Unity 5.3 headers extracted from Lux Water_WaterSurface:
+//             API d3d11
+//             Shader model vs_4_0
+//             undeciphered1: 201802150 38 0 0
+//             undeciphered1a: 6
+// 80000000:   Keywords { "POINT" "GEOM_TYPE_BRANCH" "GEOM_TYPE_BRANCH_DETAIL" "GEOM_TYPE_MESH" "USINGWATERPROJECTORS" "USINGWATERVOLUME" }
+// 00008000:   Keywords { "POINT" "GEOM_TYPE_BRANCH" "GEOM_TYPE_BRANCH_DETAIL" "GEOM_TYPE_MESH" "USINGWATERPROJECTORS" }
+// 00800000:   Keywords { "POINT" "GEOM_TYPE_BRANCH" "GEOM_TYPE_BRANCH_DETAIL" "USINGWATERPROJECTORS" "USINGWATERVOLUME" }
+// 00000080:   Keywords { "POINT" "GEOM_TYPE_BRANCH" "GEOM_TYPE_BRANCH_DETAIL" "USINGWATERPROJECTORS" }
+// 20000000:   Keywords { "POINT" "GEOM_TYPE_BRANCH" "GEOM_TYPE_MESH" "USINGWATERPROJECTORS" "USINGWATERVOLUME" }
+// 00002000:   Keywords { "POINT" "GEOM_TYPE_BRANCH" "GEOM_TYPE_MESH" "USINGWATERPROJECTORS" }
+// 00200000:   Keywords { "POINT" "GEOM_TYPE_BRANCH" "USINGWATERPROJECTORS" "USINGWATERVOLUME" }
+// 00000020:   Keywords { "POINT" "GEOM_TYPE_BRANCH" "USINGWATERPROJECTORS" }
+// 40000000:   Keywords { "POINT" "GEOM_TYPE_BRANCH_DETAIL" "GEOM_TYPE_MESH" "USINGWATERPROJECTORS" "USINGWATERVOLUME" }
+// 00004000:   Keywords { "POINT" "GEOM_TYPE_BRANCH_DETAIL" "GEOM_TYPE_MESH" "USINGWATERPROJECTORS" }
+// 00400000:   Keywords { "POINT" "GEOM_TYPE_BRANCH_DETAIL" "USINGWATERPROJECTORS" "USINGWATERVOLUME" }
+// 00000040:   Keywords { "POINT" "GEOM_TYPE_BRANCH_DETAIL" "USINGWATERPROJECTORS" }
+// 01000000:   Keywords { "POINT" "GEOM_TYPE_MESH" "USINGWATERPROJECTORS" "USINGWATERVOLUME" }
+// 00000100:   Keywords { "POINT" "GEOM_TYPE_MESH" "USINGWATERPROJECTORS" }
+// 00010000:   Keywords { "POINT" "USINGWATERPROJECTORS" "USINGWATERVOLUME" }
+// 00000001:   Keywords { "POINT" "USINGWATERPROJECTORS" }
+// 08000000:   Keywords { "POINT_COOKIE" "GEOM_TYPE_BRANCH" "GEOM_TYPE_BRANCH_DETAIL" "GEOM_TYPE_MESH" "USINGWATERPROJECTORS" "USINGWATERVOLUME" }
+// 00000800:   Keywords { "POINT_COOKIE" "GEOM_TYPE_BRANCH" "GEOM_TYPE_BRANCH_DETAIL" "GEOM_TYPE_MESH" "USINGWATERPROJECTORS" }
+// 00080000:   Keywords { "POINT_COOKIE" "GEOM_TYPE_BRANCH" "GEOM_TYPE_BRANCH_DETAIL" "USINGWATERPROJECTORS" "USINGWATERVOLUME" }
+// 00000008:   Keywords { "POINT_COOKIE" "GEOM_TYPE_BRANCH" "GEOM_TYPE_BRANCH_DETAIL" "USINGWATERPROJECTORS" }
+// 02000000:   Keywords { "POINT_COOKIE" "GEOM_TYPE_BRANCH" "GEOM_TYPE_MESH" "USINGWATERPROJECTORS" "USINGWATERVOLUME" }
+// 00000200:   Keywords { "POINT_COOKIE" "GEOM_TYPE_BRANCH" "GEOM_TYPE_MESH" "USINGWATERPROJECTORS" }
+// 00020000:   Keywords { "POINT_COOKIE" "GEOM_TYPE_BRANCH" "USINGWATERPROJECTORS" "USINGWATERVOLUME" }
+// 00000002:   Keywords { "POINT_COOKIE" "GEOM_TYPE_BRANCH" "USINGWATERPROJECTORS" }
+// 04000000:   Keywords { "POINT_COOKIE" "GEOM_TYPE_BRANCH_DETAIL" "GEOM_TYPE_MESH" "USINGWATERPROJECTORS" "USINGWATERVOLUME" }
+// 00000400:   Keywords { "POINT_COOKIE" "GEOM_TYPE_BRANCH_DETAIL" "GEOM_TYPE_MESH" "USINGWATERPROJECTORS" }
+// 00040000:   Keywords { "POINT_COOKIE" "GEOM_TYPE_BRANCH_DETAIL" "USINGWATERPROJECTORS" "USINGWATERVOLUME" }
+// 00000004:   Keywords { "POINT_COOKIE" "GEOM_TYPE_BRANCH_DETAIL" "USINGWATERPROJECTORS" }
+// 10000000:   Keywords { "POINT_COOKIE" "GEOM_TYPE_MESH" "USINGWATERPROJECTORS" "USINGWATERVOLUME" }
+// 00001000:   Keywords { "POINT_COOKIE" "GEOM_TYPE_MESH" "USINGWATERPROJECTORS" }
+// 00100000:   Keywords { "POINT_COOKIE" "USINGWATERPROJECTORS" "USINGWATERVOLUME" }
+// 00000010:   Keywords { "POINT_COOKIE" "USINGWATERPROJECTORS" }
+//             undeciphered2: 1 0 3 0 0 0
+//             undeciphered3: 255 3 0 0 2 2 1 1
+// 00ff00ff:   ConstBuffer "$Globals" 592
+// ff00ff00:   ConstBuffer "$Globals" 608
+//             Vector 224 [_BumpTiling]
+//             Matrix 64 [unity_WorldToLight]
+//             ConstBuffer "UnityPerDraw" 176
+//             Vector 144 [unity_WorldTransformParams]
+//             Matrix 0 [unity_ObjectToWorld]
+//             Matrix 64 [unity_WorldToObject]
+//             ConstBuffer "UnityPerFrame" 368
+//             Matrix 144 [unity_MatrixV]
+//             Matrix 272 [unity_MatrixVP]
+//             BindCB "$Globals" 0
+//             BindCB "UnityPerDraw" 1
+//             BindCB "UnityPerFrame" 2
+//
+// Headers extracted with DarkStarSword's extract_unity55_shaders.py
+// https://github.com/DarkStarSword/3d-fixes
+
+//
+// Generated by Microsoft (R) D3D Shader Disassembler
+//
+//   using 3Dmigoto v1.3.16 on Sat Sep 07 10:23:24 2019
+//
+//
+// Input signature:
+//
+// Name                 Index   Mask Register SysValue  Format   Used
+// -------------------- ----- ------ -------- -------- ------- ------
+// POSITION                 0   xyzw        0     NONE   float   xyzw
+// TANGENT                  0   xyzw        1     NONE   float   xyzw
+// NORMAL                   0   xyz         2     NONE   float   xyz
+// TEXCOORD                 0   xyzw        3     NONE   float
+// TEXCOORD                 1   xyzw        4     NONE   float
+// TEXCOORD                 2   xyzw        5     NONE   float
+// TEXCOORD                 3   xyzw        6     NONE   float
+// COLOR                    0   xyzw        7     NONE   float
+//
+//
+// Output signature:
+//
+// Name                 Index   Mask Register SysValue  Format   Used
+// -------------------- ----- ------ -------- -------- ------- ------
+// SV_POSITION              0   xyzw        0      POS   float   xyzw
+// TEXCOORD                 0   xyz         1     NONE   float   xyz
+// TEXCOORD                 1   xyz         2     NONE   float   xyz
+// TEXCOORD                 2   xyz         3     NONE   float   xyz
+// TEXCOORD                 3   xyz         4     NONE   float   xyz
+// TEXCOORD                 4   xyzw        5     NONE   float   xyzw
+// TEXCOORD                 5   xyzw        6     NONE   float   xyzw
+// TEXCOORD                 6   xyzw        7     NONE   float   xyzw
+// TEXCOORD                 7   xyzw        8     NONE   float   xyzw
+// TEXCOORD                 8   xyz         9     NONE   float   xyz
+// TEXCOORD                 9   xyzw       10     NONE   float   xyzw
+//
+vs_4_0
+dcl_constantbuffer cb0[15], immediateIndexed
+dcl_constantbuffer cb1[10], immediateIndexed
+dcl_constantbuffer cb2[21], immediateIndexed
+dcl_input v0.xyzw
+dcl_input v1.xyzw
+dcl_input v2.xyz
+dcl_output_siv o0.xyzw, position
+dcl_output o1.xyz
+dcl_output o2.xyz
+dcl_output o3.xyz
+dcl_output o4.xyz
+dcl_output o5.xyzw
+dcl_output o6.xyzw
+dcl_output o7.xyzw
+dcl_output o8.xyzw
+dcl_output o9.xyz
+dcl_output o10.xyzw
+dcl_temps 7
+
+// 3DMigoto StereoParams:
+dcl_resource_texture2d (float,float,float,float) t125
+
+ld_indexable(texture2d)(float,float,float,float) r6.xyzw, l(0, 0, 0, 0), t125.xyzw
+
+mul r0.xyzw, v0.yyyy, cb1[1].xyzw
+mad r0.xyzw, cb1[0].xyzw, v0.xxxx, r0.xyzw
+mad r0.xyzw, cb1[2].xyzw, v0.zzzz, r0.xyzw
+add r1.xyzw, r0.xyzw, cb1[3].xyzw
+mul r2.xyzw, r1.yyyy, cb2[18].xyzw
+mad r2.xyzw, cb2[17].xyzw, r1.xxxx, r2.xyzw
+mad r2.xyzw, cb2[19].xyzw, r1.zzzz, r2.xyzw
+mad r2.xyzw, cb2[20].xyzw, r1.wwww, r2.xyzw
+mov o0.xyzw, r2.xyzw
+
+// Automatic vertex shader halo fix inserted with DarkStarSword's asmtool.py:
+// asmtool.py -I ../.. --auto-fix-vertex-halo --fix-unusual-halo-with-inconsistent-w-optimisation --fix-unity-reflection --fix-unity-frustum-world --only-autofixed e57f7e5aaa61e0d3-vs.txt
+ne r6.w, r2.w, l(1.0)
+if_nz r6.w
+  add r6.w, r2.w, -r6.y
+  mad r2.x, r6.w, r6.x, r2.x
+endif
+
+dp3 r3.y, v2.xyzx, cb1[4].xyzx
+dp3 r3.z, v2.xyzx, cb1[5].xyzx
+dp3 r3.x, v2.xyzx, cb1[6].xyzx
+dp3 r3.w, r3.xyzx, r3.xyzx
+rsq r3.w, r3.w
+mul r3.xyz, r3.wwww, r3.xyzx
+mul r4.xyz, v1.yyyy, cb1[1].yzxy
+mad r4.xyz, cb1[0].yzxy, v1.xxxx, r4.xyzx
+mad r4.xyz, cb1[2].yzxy, v1.zzzz, r4.xyzx
+dp3 r3.w, r4.xyzx, r4.xyzx
+rsq r3.w, r3.w
+mul r4.xyz, r3.wwww, r4.xyzx
+mul r5.xyz, r3.xyzx, r4.xyzx
+mad r5.xyz, r3.zxyz, r4.yzxy, -r5.xyzx
+mul r3.w, v1.w, cb1[9].w
+mul r5.xyz, r3.wwww, r5.xyzx
+mov o1.y, r5.x
+mov o1.x, r4.z
+mov o1.z, r3.y
+mov o2.x, r4.x
+mov o3.x, r4.y
+mov o2.z, r3.z
+mov o3.z, r3.x
+mov o2.y, r5.y
+mov o3.y, r5.z
+mad o4.xyz, cb1[3].xyzx, v0.wwww, r0.xyzx
+mad r0.xyzw, cb1[3].xyzw, v0.wwww, r0.xyzw
+mov o5.zw, l(0,0,0,0)
+mul o5.xy, r1.xzxx, cb0[14].wwww
+mul r3.xyz, r2.xwyx, l(0.500000, 0.500000, -0.500000, 0.000000)
+mov o6.zw, r2.zzzw
+add o6.xy, r3.yyyy, r3.xzxx
+mul r2.xyz, r1.yyyy, cb2[10].xyzx
+mad r2.xyz, cb2[9].xyzx, r1.xxxx, r2.xyzx
+mad r2.xyz, cb2[11].xyzx, r1.zzzz, r2.xyzx
+mad r1.xzw, cb2[12].xxyz, r1.wwww, r2.xxyz
+mov o7.w, r1.y
+mul o7.xyz, r1.xzwx, l(-1.000000, -1.000000, 1.000000, 0.000000)
+mov o8.xyzw, l(0,0,0,0)
+mul r1.xyz, r0.yyyy, cb0[5].xyzx
+mad r1.xyz, cb0[4].xyzx, r0.xxxx, r1.xyzx
+mad r0.xyz, cb0[6].xyzx, r0.zzzz, r1.xyzx
+mad o9.xyz, cb0[7].xyzx, r0.wwww, r0.xyzx
+mov o10.xyzw, l(0,0,0,0)
+ret
+// Approximately 0 instruction slots used

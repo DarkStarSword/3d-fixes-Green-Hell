@@ -1,0 +1,225 @@
+// asmtool.py -I ../.. --auto-fix-vertex-halo --fix-unusual-halo-with-inconsistent-w-optimisation --fix-unity-reflection --fix-unity-frustum-world --only-autofixed c5714e45f0c17e12-vs.txt
+// 3DMigoto: c5714e45f0c17e12 | Matched 40 variants of 2 shaders: Hidden/Relief Pack/ReliefTerrain-FarOnly, Relief Pack/ReliefTerrain-FirstPass
+//
+// fffff00000:    Unity headers extracted from Hidden_Relief Pack_ReliefTerrain-FarOnly
+// 00000fffff:    Unity headers extracted from Relief Pack_ReliefTerrain-FirstPass
+// fffff00000:    Shader "Hidden/Relief Pack/ReliefTerrain-FarOnly" {
+// 00000fffff:    Shader "Relief Pack/ReliefTerrain-FirstPass" {
+// fffff00000:      Fallback "Diffuse"
+// 00000fffff:      Fallback "Nature/Terrain/Standard"
+//                  SubShader 1/1 {
+// fffff00000:        LOD 700
+// 00000fffff:        Tags { "QUEUE"="Geometry-100" "RenderType"="Opaque" }
+// fffff00000:        Tags { "QUEUE"="Geometry-100" "RenderType"="Opaque" "SplatCount"="12" }
+//                    Pass 1/6 {
+//                      Name "FORWARD"
+// fffff00000:          Tags { "LIGHTMODE"="FORWARDBASE" "QUEUE"="Geometry-100" "RenderType"="Opaque" "SHADOWSUPPORT"="true" "SplatCount"="12" }
+// 00000fffff:          Tags { "LIGHTMODE"="FORWARDBASE" "QUEUE"="Geometry-100" "RenderType"="Opaque" "SHADOWSUPPORT"="true" }
+//                      Program "vp" {
+//                        SubProgram "d3d11" {
+//                        }
+//                      }
+//                    }
+//                  }
+//                }
+//
+// fffff00000: Unity 5.3 headers extracted from Hidden_Relief Pack_ReliefTerrain-FarOnly:
+// 00000fffff: Unity 5.3 headers extracted from Relief Pack_ReliefTerrain-FirstPass:
+//               API d3d11
+//               Shader model vs_4_0
+//               undeciphered1: 201802150 62 0 0
+//               undeciphered1a: 7
+// 0400004000:   Keywords { "DIRECTIONAL" "SHADOWS_SCREEN" "FOG_LINEAR" "RTP_PM_SHADING" }
+// 0000400004:   Keywords { "DIRECTIONAL" "SHADOWS_SCREEN" "FOG_LINEAR" "RTP_POM_SHADING_HI" }
+// 0040000400:   Keywords { "DIRECTIONAL" "SHADOWS_SCREEN" "FOG_LINEAR" "RTP_POM_SHADING_LO" }
+// 0004000040:   Keywords { "DIRECTIONAL" "SHADOWS_SCREEN" "FOG_LINEAR" "RTP_POM_SHADING_MED" }
+// 4000040000:   Keywords { "DIRECTIONAL" "SHADOWS_SCREEN" "FOG_LINEAR" "RTP_SIMPLE_SHADING" }
+// 0800008000:   Keywords { "DIRECTIONAL" "SHADOWS_SCREEN" "LIGHTPROBE_SH" "FOG_LINEAR" "RTP_PM_SHADING" }
+// 0000800008:   Keywords { "DIRECTIONAL" "SHADOWS_SCREEN" "LIGHTPROBE_SH" "FOG_LINEAR" "RTP_POM_SHADING_HI" }
+// 0080000800:   Keywords { "DIRECTIONAL" "SHADOWS_SCREEN" "LIGHTPROBE_SH" "FOG_LINEAR" "RTP_POM_SHADING_LO" }
+// 0008000080:   Keywords { "DIRECTIONAL" "SHADOWS_SCREEN" "LIGHTPROBE_SH" "FOG_LINEAR" "RTP_POM_SHADING_MED" }
+// 8000080000:   Keywords { "DIRECTIONAL" "SHADOWS_SCREEN" "LIGHTPROBE_SH" "FOG_LINEAR" "RTP_SIMPLE_SHADING" }
+// 0200002000:   Keywords { "DIRECTIONAL" "SHADOWS_SCREEN" "LIGHTPROBE_SH" "RTP_PM_SHADING" }
+// 0000200002:   Keywords { "DIRECTIONAL" "SHADOWS_SCREEN" "LIGHTPROBE_SH" "RTP_POM_SHADING_HI" }
+// 0020000200:   Keywords { "DIRECTIONAL" "SHADOWS_SCREEN" "LIGHTPROBE_SH" "RTP_POM_SHADING_LO" }
+// 0002000020:   Keywords { "DIRECTIONAL" "SHADOWS_SCREEN" "LIGHTPROBE_SH" "RTP_POM_SHADING_MED" }
+// 2000020000:   Keywords { "DIRECTIONAL" "SHADOWS_SCREEN" "LIGHTPROBE_SH" "RTP_SIMPLE_SHADING" }
+// 0100001000:   Keywords { "DIRECTIONAL" "SHADOWS_SCREEN" "RTP_PM_SHADING" }
+// 0000100001:   Keywords { "DIRECTIONAL" "SHADOWS_SCREEN" "RTP_POM_SHADING_HI" }
+// 0010000100:   Keywords { "DIRECTIONAL" "SHADOWS_SCREEN" "RTP_POM_SHADING_LO" }
+// 0001000010:   Keywords { "DIRECTIONAL" "SHADOWS_SCREEN" "RTP_POM_SHADING_MED" }
+// 1000010000:   Keywords { "DIRECTIONAL" "SHADOWS_SCREEN" "RTP_SIMPLE_SHADING" }
+//               undeciphered2: 1 0 5 0 0 0
+//               undeciphered3: 127 4 0 0 1 1 4 5 3 3
+//               ConstBuffer "$Globals" 176
+//               Vector 96 [_WorldSpaceLightPosCustom]
+//               Vector 160 [_Control_ST]
+//               ConstBuffer "UnityPerCamera" 144
+//               Vector 80 [_ProjectionParams]
+//               ConstBuffer "UnityLighting" 768
+//               Vector 0 [_WorldSpaceLightPos0]
+//               Vector 672 [unity_SHBr]
+//               Vector 688 [unity_SHBg]
+//               Vector 704 [unity_SHBb]
+//               Vector 720 [unity_SHC]
+//               ConstBuffer "UnityPerDraw" 176
+//               Vector 144 [unity_WorldTransformParams]
+//               Matrix 0 [unity_ObjectToWorld]
+//               Matrix 64 [unity_WorldToObject]
+//               ConstBuffer "UnityPerFrame" 368
+//               Matrix 272 [unity_MatrixVP]
+//               BindCB "$Globals" 0
+//               BindCB "UnityPerCamera" 1
+//               BindCB "UnityLighting" 2
+//               BindCB "UnityPerDraw" 3
+//               BindCB "UnityPerFrame" 4
+//
+// Headers extracted with DarkStarSword's extract_unity55_shaders.py
+// https://github.com/DarkStarSword/3d-fixes
+
+//
+// Generated by Microsoft (R) D3D Shader Disassembler
+//
+//   using 3Dmigoto v1.3.16 on Sat Sep 07 10:08:23 2019
+//
+//
+// Input signature:
+//
+// Name                 Index   Mask Register SysValue  Format   Used
+// -------------------- ----- ------ -------- -------- ------- ------
+// POSITION                 0   xyzw        0     NONE   float   xyzw
+// TANGENT                  0   xyzw        1     NONE   float
+// NORMAL                   0   xyz         2     NONE   float   xyz
+// TEXCOORD                 0   xy          3     NONE   float   xy
+// TEXCOORD                 1   xy          4     NONE   float
+// TEXCOORD                 2   xy          5     NONE   float
+// COLOR                    0   xyzw        6     NONE   float      w
+//
+//
+// Output signature:
+//
+// Name                 Index   Mask Register SysValue  Format   Used
+// -------------------- ----- ------ -------- -------- ------- ------
+// SV_POSITION              0   xyzw        0      POS   float   xyzw
+// TEXCOORD                 0   xy          1     NONE   float   xy
+// TEXCOORD                 1   xyzw        2     NONE   float   xyzw
+// TEXCOORD                 2   xyzw        3     NONE   float   xyzw
+// TEXCOORD                 3   xyzw        4     NONE   float   xyzw
+// COLOR                    0   xyzw        5     NONE   float   xyzw
+// TEXCOORD                 4   xyz         6     NONE   float   xyz
+// TEXCOORD                 5   xyzw        7     NONE   float   xyzw
+//
+vs_4_0
+dcl_constantbuffer cb0[11], immediateIndexed
+dcl_constantbuffer cb1[6], immediateIndexed
+dcl_constantbuffer cb2[46], immediateIndexed
+dcl_constantbuffer cb3[10], immediateIndexed
+dcl_constantbuffer cb4[21], immediateIndexed
+dcl_input v0.xyzw
+dcl_input v2.xyz
+dcl_input v3.xy
+dcl_input v6.w
+dcl_output_siv o0.xyzw, position
+dcl_output o1.xy
+dcl_output o2.xyzw
+dcl_output o3.xyzw
+dcl_output o4.xyzw
+dcl_output o5.xyzw
+dcl_output o6.xyz
+dcl_output o7.xyzw
+dcl_temps 8
+
+// 3DMigoto StereoParams:
+dcl_resource_texture2d (float,float,float,float) t125
+
+ld_indexable(texture2d)(float,float,float,float) r7.xyzw, l(0, 0, 0, 0), t125.xyzw
+
+mul r0.xyzw, v0.yyyy, cb3[1].xyzw
+mad r0.xyzw, cb3[0].xyzw, v0.xxxx, r0.xyzw
+mad r0.xyzw, cb3[2].xyzw, v0.zzzz, r0.xyzw
+add r1.xyzw, r0.xyzw, cb3[3].xyzw
+mad r0.xyz, cb3[3].xyzx, v0.wwww, r0.xyzx
+mul r2.xyzw, r1.yyyy, cb4[18].xyzw
+mad r2.xyzw, cb4[17].xyzw, r1.xxxx, r2.xyzw
+mad r2.xyzw, cb4[19].xyzw, r1.zzzz, r2.xyzw
+mad r1.xyzw, cb4[20].xyzw, r1.wwww, r2.xyzw
+mov o0.xyzw, r1.xyzw
+
+// Automatic vertex shader halo fix inserted with DarkStarSword's asmtool.py:
+// asmtool.py -I ../.. --auto-fix-vertex-halo --fix-unusual-halo-with-inconsistent-w-optimisation --fix-unity-reflection --fix-unity-frustum-world --only-autofixed c5714e45f0c17e12-vs.txt
+ne r7.w, r1.w, l(1.0)
+if_nz r7.w
+  add r7.w, r1.w, -r7.y
+  mad r1.x, r7.w, r7.x, r1.x
+endif
+
+mad o1.xy, v3.xyxx, cb0[10].xyxx, cb0[10].zwzz
+mov o2.w, r0.x
+dp3 r0.x, v2.xyzx, v2.xyzx
+rsq r0.x, r0.x
+mul r2.xyz, r0.xxxx, v2.xyzx
+mul r3.xyz, r2.zxyz, l(1.000000, 0.000000, 0.000100, 0.000000)
+mad r3.xyz, r2.xyzx, l(0.000100, 1.000000, 0.000000, 0.000000), -r3.xyzx
+mul r4.xyz, r2.zxyz, r3.xyzx
+mad r3.xyz, r2.yzxy, r3.yzxy, -r4.xyzx
+dp3 r0.x, r3.xyzx, r3.xyzx
+sqrt r0.x, r0.x
+max r0.x, r0.x, l(0.000100)
+div r3.xyz, r3.xyzx, r0.xxxx
+mul r4.xyz, r3.yyyy, cb3[1].yzxy
+mad r4.xyz, cb3[0].yzxy, r3.xxxx, r4.xyzx
+mad r4.xyz, cb3[2].yzxy, r3.zzzz, r4.xyzx
+dp3 r0.x, r4.xyzx, r4.xyzx
+rsq r0.x, r0.x
+mul r4.xyz, r0.xxxx, r4.xyzx
+mul r5.xyzw, r2.yyyy, cb3[1].xyzz
+mad r5.xyzw, cb3[0].xyzz, r2.xxxx, r5.xyzw
+mad r5.xyzw, cb3[2].xyzz, r2.zzzz, r5.xyzw
+dp3 r0.x, r5.xywx, r5.xywx
+rsq r0.x, r0.x
+mul r5.xyzw, r0.xxxx, r5.xyzw
+mul r6.xyz, r4.xyzx, r5.wxyw
+mad r6.xyz, r5.ywxy, r4.yzxy, -r6.xyzx
+mul r6.xyz, r6.xyzx, -cb3[9].wwww
+mov o2.y, r6.x
+mov o2.x, r4.z
+mov o2.z, r5.x
+mov o3.w, r0.y
+mov o4.w, r0.z
+mov o3.x, r4.x
+mov o4.x, r4.y
+mov o3.y, r6.y
+mov o4.y, r6.z
+mov o3.z, r5.y
+mov o4.z, r5.w
+mul r0.xyz, r2.zxyz, r3.yzxy
+mad r0.xyz, r2.yzxy, r3.zxyz, -r0.xyzx
+dp4 r0.w, cb2[0].xyzw, cb2[0].xyzw
+add r0.w, r0.w, l(-1.000000)
+lt r0.w, l(0.010000), |r0.w|
+movc r4.xyzw, r0.wwww, cb0[6].xyzw, cb2[0].xyzw
+mul r6.xyz, r4.yyyy, cb3[5].xyzx
+mad r6.xyz, cb3[4].xyzx, r4.xxxx, r6.xyzx
+mad r4.xyz, cb3[6].xyzx, r4.zzzz, r6.xyzx
+mad r4.xyz, cb3[7].xyzx, r4.wwww, r4.xyzx
+dp3 r0.y, -r0.xyzx, r4.xyzx
+dp3 r0.x, r3.xyzx, r4.xyzx
+dp3 r0.z, r2.xyzx, r4.xyzx
+dp3 r0.w, r0.xyzx, r0.xyzx
+rsq r0.w, r0.w
+mul o5.xyz, r0.wwww, r0.xyzx
+mov o5.w, v6.w
+mul r0.x, r5.y, r5.y
+mad r0.x, r5.x, r5.x, -r0.x
+mul r2.xyzw, r5.ywzx, r5.xyzw
+dp4 r3.x, cb2[42].xyzw, r2.xyzw
+dp4 r3.y, cb2[43].xyzw, r2.xyzw
+dp4 r3.z, cb2[44].xyzw, r2.xyzw
+mad o6.xyz, cb2[45].xyzx, r0.xxxx, r3.xyzx
+mul r0.x, r1.y, cb1[5].x
+mul r0.w, r0.x, l(0.500000)
+mul r0.xz, r1.xxwx, l(0.500000, 0.000000, 0.500000, 0.000000)
+mov o7.zw, r1.zzzw
+add o7.xy, r0.zzzz, r0.xwxx
+ret
+// Approximately 0 instruction slots used
