@@ -67,7 +67,7 @@ SamplerState s0_s : register(s0);
 
 
 // Unity constant buffers reconstructed with DarkStarSword's hlsltool.py:
-// hlsltool.py --reconstruct-unity-cbuffers -I /home/dss/3d-fixes/Green Hell/ --fxc /home/dss/fxc.exe 86f2b0ab96754c99-ps_replace.txt
+// hlsltool.py --reconstruct-unity-cbuffers -I ../.. --fxc /home/dss/fxc.exe -f 86f2b0ab96754c99-ps_replace.txt
 
 cbuffer UnityShadows : register(b2) {
   float4 unity_ShadowSplitSpheres0 : packoffset(c0);
@@ -100,6 +100,8 @@ cbuffer Globals : register(b0) {
 
 // 3Dmigoto declarations
 #define cmp -
+Texture1D<float4> IniParams : register(t120);
+Texture2D<float4> StereoParams : register(t125);
 
 
 void main(
@@ -155,6 +157,11 @@ void main(
   r0.xyzw = unity_CameraInvProjection[2].xyzw * r0.zzzz + r1.xyzw;
   r0.xyzw = unity_CameraInvProjection[3].xyzw + r0.xyzw;
   r0.xyz = r0.xyz / r0.www;
+
+// Depth value is negative
+float4 s = StereoParams.Load(0);
+r0.x -= s.x * (-r0.z - s.y) * unity_CameraInvProjection._m00;
+
   r1.xyzw = unity_CameraToWorld[1].xyzw * r0.yyyy;
   r1.xyzw = unity_CameraToWorld[0].xyzw * r0.xxxx + r1.xyzw;
   r0.xyzw = unity_CameraToWorld[2].xyzw * -r0.zzzz + r1.xyzw;
