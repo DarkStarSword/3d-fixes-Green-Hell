@@ -35,7 +35,7 @@
 // ---- Created with 3Dmigoto v1.3.16 on Sat Sep 07 10:13:18 2019
 
 // Unity constant buffers reconstructed with DarkStarSword's hlsltool.py:
-// hlsltool.py --reconstruct-unity-cbuffers -I /home/dss/3d-fixes/Green Hell/ --fxc /home/dss/fxc.exe -f cffd01148deac066-vs_replace.txt
+// hlsltool.py --reconstruct-unity-cbuffers -I ../../.. --fxc /home/dss/fxc.exe -f cffd01148deac066-vs_replace.txt
 
 cbuffer UnityPerFrame : register(b2) {
   row_major matrix unity_MatrixVP : packoffset(c17);
@@ -56,6 +56,8 @@ cbuffer Globals : register(b0) {
 // 3Dmigoto declarations
 #define cmp -
 
+Texture1D<float4> IniParams : register(t120);
+Texture2D<float4> StereoParams : register(t125);
 
 void main(
   float4 v0 : POSITION0,
@@ -68,6 +70,10 @@ void main(
   uint4 bitmask, uiDest;
   float4 fDest;
 
+float4 repl_LightPosition = _LightPosition;
+float4 s = StereoParams.Load(0);
+repl_LightPosition.x += s.x / 2;
+
   r0.xyzw = unity_ObjectToWorld[1].xyzw * v0.yyyy;
   r0.xyzw = unity_ObjectToWorld[0].xyzw * v0.xxxx + r0.xyzw;
   r0.xyzw = unity_ObjectToWorld[2].xyzw * v0.zzzz + r0.xyzw;
@@ -76,7 +82,7 @@ void main(
   r1.xyzw = unity_MatrixVP[0].xyzw * r0.xxxx + r1.xyzw;
   r1.xyzw = unity_MatrixVP[2].xyzw * r0.zzzz + r1.xyzw;
   o0.xyzw = unity_MatrixVP[3].xyzw * r0.wwww + r1.xyzw;
-  r0.xy = _LightPosition.xy + -v1.xy;
+  r0.xy = repl_LightPosition.xy + -v1.xy;
   p1.xy = _BlurRadius4.xy * r0.xy;
   o1.xy = v1.xy;
   return;

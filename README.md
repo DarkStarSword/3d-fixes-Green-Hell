@@ -7,9 +7,6 @@ Fixed
 - Lights
 - Shadows
 - Accurate specular reflections
-
-Still Broken
-------------
 - God rays
 
 Installation

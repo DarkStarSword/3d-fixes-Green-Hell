@@ -33,7 +33,7 @@ SamplerState s0_s : register(s0);
 
 
 // Unity constant buffers reconstructed with DarkStarSword's hlsltool.py:
-// hlsltool.py --reconstruct-unity-cbuffers -I /home/dss/3d-fixes/Green Hell/ --fxc /home/dss/fxc.exe -f f7750bd25c8d645a-ps_replace.txt
+// hlsltool.py --reconstruct-unity-cbuffers -I ../../.. --fxc /home/dss/fxc.exe -f f7750bd25c8d645a-ps_replace.txt
 
 cbuffer Globals : register(b0) {
   float4 _LightPosition : packoffset(c4);
@@ -45,6 +45,8 @@ cbuffer Globals : register(b0) {
 // 3Dmigoto declarations
 #define cmp -
 
+Texture1D<float4> IniParams : register(t120);
+Texture2D<float4> StereoParams : register(t125);
 
 void main(
   float4 v0 : SV_POSITION0,
@@ -56,10 +58,14 @@ void main(
   uint4 bitmask, uiDest;
   float4 fDest;
 
-  r0.xy = _LightPosition.xy + -w1.xy;
+float4 repl_LightPosition = _LightPosition;
+float4 s = StereoParams.Load(0);
+repl_LightPosition.x += s.x / 2;
+
+  r0.xy = repl_LightPosition.xy + -w1.xy;
   r0.x = dot(r0.xy, r0.xy);
   r0.x = sqrt(r0.x);
-  r0.x = saturate(_LightPosition.w + -r0.x);
+  r0.x = saturate(repl_LightPosition.w + -r0.x);
   r1.xyzw = t0.Sample(s0_s, v1.xy).xyzw;
   r0.y = 1.00999999 + -r1.w;
   o0.xyzw = r0.yyyy * r0.xxxx;
