@@ -8,6 +8,7 @@ Fixed
 - Shadows
 - Accurate specular reflections
 - God rays
+- Adds a crosshair adjustment
 
 Installation
 ------------

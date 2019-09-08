@@ -1,0 +1,110 @@
+// HUD / crosshair
+// 3DMigoto: 058da213eb3a4939 | Matched 4 variants of 1 shaders: UI/Default
+//
+//       Unity headers extracted from UI_Default
+//       Shader "UI/Default" {
+//         SubShader 1/1 {
+//           Tags { "CanUseSpriteAtlas"="true" "IGNOREPROJECTOR"="true" "PreviewType"="Plane" "QUEUE"="Transparent" "RenderType"="Transparent" }
+//           Pass 1/1 {
+//             Name "Default"
+//             Tags { "CanUseSpriteAtlas"="true" "IGNOREPROJECTOR"="true" "PreviewType"="Plane" "QUEUE"="Transparent" "RenderType"="Transparent" }
+//             ZWrite Off
+//             Program "vp" {
+//               SubProgram "d3d11" {
+//               }
+//             }
+//           }
+//         }
+//       }
+//
+//    Unity 5.3 headers extracted from UI_Default:
+//      API d3d11
+//      Shader model vs_4_0
+//      undeciphered1: 201802150 10 0 0
+//      undeciphered1a: 2
+// 2:   Keywords { "UNITY_UI_ALPHACLIP" }
+// 8:   Keywords { "UNITY_UI_CLIP_RECT" "UNITY_UI_ALPHACLIP" }
+// 4:   Keywords { "UNITY_UI_CLIP_RECT" }
+//      undeciphered2: 1 0 3 0 0 0
+//      undeciphered3: 25 3 0 0 3 3 4 5
+//      ConstBuffer "$Globals" 96
+//      Vector 32 [_Color]
+//      Vector 80 [_MainTex_ST]
+//      ConstBuffer "UnityPerDraw" 176
+//      Matrix 0 [unity_ObjectToWorld]
+//      ConstBuffer "UnityPerFrame" 368
+//      Matrix 272 [unity_MatrixVP]
+//      BindCB "$Globals" 0
+//      BindCB "UnityPerDraw" 1
+//      BindCB "UnityPerFrame" 2
+//
+// Headers extracted with DarkStarSword's extract_unity55_shaders.py
+// https://github.com/DarkStarSword/3d-fixes
+
+// ---- Created with 3Dmigoto v1.3.16 on Sat Sep 07 08:25:56 2019
+
+// Unity constant buffers reconstructed with DarkStarSword's hlsltool.py:
+// hlsltool.py --reconstruct-unity-cbuffers -I ../.. -f --fxc /home/dss/fxc.exe 058da213eb3a4939-vs_replace.txt
+
+cbuffer UnityPerFrame : register(b2) {
+  row_major matrix unity_MatrixVP : packoffset(c17);
+}
+
+cbuffer UnityPerDraw : register(b1) {
+  row_major matrix unity_ObjectToWorld : packoffset(c0);
+}
+
+cbuffer Globals : register(b0) {
+  float4 _Color : packoffset(c2);
+  float4 _MainTex_ST : packoffset(c5);
+}
+
+
+
+
+// 3Dmigoto declarations
+#define cmp -
+Texture1D<float4> IniParams : register(t120);
+Texture2D<float4> StereoParams : register(t125);
+
+#include "crosshair.hlsl"
+
+#define cursor_showing IniParams[1].x
+
+void main(
+  float4 v0 : POSITION0,
+  float4 v1 : COLOR0,
+  float2 v2 : TEXCOORD0,
+  out float4 o0 : SV_POSITION0,
+  out float4 o1 : COLOR0,
+  out float4 o2 : TEXCOORD0,
+  out float4 o3 : TEXCOORD1)
+{
+  float4 r0,r1;
+  uint4 bitmask, uiDest;
+  float4 fDest;
+
+  r0.xyzw = unity_ObjectToWorld[1].xyzw * v0.yyyy;
+  r0.xyzw = unity_ObjectToWorld[0].xyzw * v0.xxxx + r0.xyzw;
+  r0.xyzw = unity_ObjectToWorld[2].xyzw * v0.zzzz + r0.xyzw;
+  r0.xyzw = unity_ObjectToWorld[3].xyzw + r0.xyzw;
+  r1.xyzw = unity_MatrixVP[1].xyzw * r0.yyyy;
+  r1.xyzw = unity_MatrixVP[0].xyzw * r0.xxxx + r1.xyzw;
+  r1.xyzw = unity_MatrixVP[2].xyzw * r0.zzzz + r1.xyzw;
+  o0.xyzw = unity_MatrixVP[3].xyzw * r0.wwww + r1.xyzw;
+  o1.xyzw = _Color.xyzw * v1.xyzw;
+  o2.xy = v2.xy * _MainTex_ST.xy + _MainTex_ST.zw;
+  o3.xyzw = v0.xyzw;
+
+if (!cursor_showing) {
+	// To start with, adjust entire HUD to crosshair depth:
+	o0.x += adjust_from_depth_buffer(0, 0) * o0.w;
+}
+
+  return;
+}
+
+/****************************** COMPILE WARNINGS ******************************
+R:\Steam\SteamApps\common\Green Hell\ShaderFixes\058da213eb3a4939-vs_replace.txt(74,14-15): warning X3578: Output value 'o2' is not completely initialized
+
+****************************** COMPILE WARNINGS ******************************/
