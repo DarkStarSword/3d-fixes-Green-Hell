@@ -2,11 +2,11 @@
 Texture2D<float4> ZBuffer : register(t110);
 
 #include "unity_cbuffers.hlsl"
-//cbuffer UnityPerCamera : register(b13)
-//{
-//	struct UnityPerCamera _UnityPerCamera;
-//}
-cbuffer UnityPerCameraRare : register(b13)
+cbuffer UnityPerCamera : register(b13)
+{
+	struct UnityPerCamera _UnityPerCamera;
+}
+cbuffer UnityPerCameraRare : register(b11)
 {
 	struct UnityPerCameraRare _UnityPerCameraRare;
 }
@@ -14,10 +14,12 @@ cbuffer UnityPerCameraRare : register(b13)
 float z_to_w(float z)
 {
 	// This is game specific - adjust as needed.
+	// For Uniity, we use _ZBufferParams:
+	//return 1 / (_UnityPerCamera._ZBufferParams.z * z + _UnityPerCamera._ZBufferParams.w);
 
-	// Normally for Unity I use _ZBufferParams, but for Green Hell I'm
-	// currently using the inverse projection matrix copied from the
-	// directional lighting shader:
+	// The above is unreliable in Green Hell. Alternatively we can use the
+	// inverse projection matrix if we have it handy. This works in many
+	// games, though note the (1-z)*2-1 is Green Hell / Unity specific:
 	float4 tmp = mul(_UnityPerCameraRare.unity_CameraInvProjection, float4(0, 0, (1-z)*2-1, 1));
 	return -(tmp.z / tmp.w);
 }
