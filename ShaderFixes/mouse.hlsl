@@ -4,6 +4,8 @@
 #define cursor_showing  IniParams[1].z
 #define cursor_pass     IniParams[1].w
 
+#define mouse_depth_mode IniParams[2].x
+
 Texture2D<float4> StereoParams : register(t125);
 Texture1D<float4> IniParams : register(t120);
 
@@ -17,6 +19,14 @@ struct vs2ps {
 
 #ifdef VERTEX_SHADER
 #include "crosshair.hlsl"
+
+bool eye_cmp(float a, float b)
+{
+	if (StereoParams.Load(0).z == 1.0)
+		return a < b;
+	else
+		return b < a;
+}
 
 void main(out vs2ps output, uint vertex : SV_VertexID)
 {
@@ -77,11 +87,22 @@ void main(out vs2ps output, uint vertex : SV_VertexID)
 	// Adjust stereo depth of pos here using whatever means you feel is
 	// suitable for this game, e.g. with a suitable crosshair.hlsl you
 	// could automatically adjust it from the depth buffer:
-	//float2 mouse_pos = (cursor_window / window_size * 2 - 1);
-	//output.pos.x += adjust_from_depth_buffer(mouse_pos.x, mouse_pos.y);
-	//output.pos.x += adjust_from_depth_buffer(0, 0);
-	// HUD depth:
-	output.pos.x += adjust_from_1px_depth_buffer();
+	if (mouse_depth_mode == 1) {
+		// Notebook mode. Adjusts based on the depth buffer, unless
+		// that would put it too far back (off the book), in which case
+		// it falls back to HUD depth so the icons at the side of the
+		// screen will work.
+		float2 mouse_pos = (cursor_window / window_size * 2 - 1);
+		float adj = adjust_from_depth_buffer(mouse_pos.x, mouse_pos.y);
+		if (eye_cmp(StereoParams.Load(0).x / 4, adj)) {
+			output.pos.x += adj;
+		} else {
+			output.pos.x += adjust_from_1px_depth_buffer();
+		}
+	} else {
+		// HUD depth:
+		output.pos.x += adjust_from_1px_depth_buffer();
+	}
 }
 #endif /* VERTEX_SHADER */
 
