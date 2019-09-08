@@ -96,6 +96,10 @@ void main(
   o2.xy = v2.xy * _MainTex_ST.xy + _MainTex_ST.zw;
   o3.xyzw = v0.xyzw;
 
+// Full screen detection:
+if (all(abs(o0.xy) >= o0.w * 0.99))
+	return;
+
 // Crosshair depth:
 //o0.x += adjust_from_depth_buffer(0, 0) * o0.w;
 
