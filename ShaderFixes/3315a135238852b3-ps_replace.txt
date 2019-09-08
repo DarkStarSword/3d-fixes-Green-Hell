@@ -41,10 +41,13 @@ SamplerState s0_s : register(s0);
 
 
 // Unity constant buffers reconstructed with DarkStarSword's hlsltool.py:
-// hlsltool.py --reconstruct-unity-cbuffers -I /home/dss/3d-fixes/Green Hell/ --fxc /home/dss/fxc.exe -f 3315a135238852b3-ps_replace.txt
+// hlsltool.py --reconstruct-unity-cbuffers --in-place 3315a135238852b3-ps_replace.txt
 
 cbuffer UnityPerCameraRare : register(b2) {
   row_major matrix unity_CameraToWorld : packoffset(c18);
+
+  // Added by DSS
+  row_major matrix unity_CameraInvProjection : packoffset(c10);
 }
 
 cbuffer UnityPerCamera : register(b1) {
@@ -62,7 +65,9 @@ cbuffer Globals : register(b0) {
 
 // 3Dmigoto declarations
 #define cmp -
-
+Texture1D<float4> IniParams : register(t120);
+Texture2D<float4> StereoParams : register(t125);
+Texture2D<float4> PrevStereoParams : register(t124);
 
 void main(
   float4 v0 : SV_POSITION0,
@@ -80,6 +85,10 @@ void main(
   r0.y = _ProjectionParams.z / v2.z;
   r0.yzw = v2.xyz * r0.yyy;
   r0.xyz = r0.yzw * r0.xxx;
+
+float4 s = StereoParams.Load(0);
+r0.x -= s.x * (r0.z - s.y) * unity_CameraInvProjection._m00;
+
   r1.xyzw = unity_CameraToWorld[1].xyzw * r0.yyyy;
   r1.xyzw = unity_CameraToWorld[0].xyzw * r0.xxxx + r1.xyzw;
   r0.xyzw = unity_CameraToWorld[2].xyzw * r0.zzzz + r1.xyzw;
@@ -88,6 +97,10 @@ void main(
   r1.xyz = _PreviousVP[0].xyw * r0.xxx + r1.xyz;
   r1.xyz = _PreviousVP[2].xyw * r0.zzz + r1.xyz;
   r1.xyz = _PreviousVP[3].xyw * r0.www + r1.xyz;
+
+float4 prev_s = PrevStereoParams.Load(0);
+r1.x += prev_s.x * (r1.z - prev_s.y);
+
   r1.xy = r1.xy / r1.zz;
   r1.xy = float2(1,1) + r1.xy;
   r1.x = 0.5 * r1.x;
@@ -96,6 +109,10 @@ void main(
   r2.xyz = _NonJitteredVP[0].xyw * r0.xxx + r2.xyz;
   r0.xyz = _NonJitteredVP[2].xyw * r0.zzz + r2.xyz;
   r0.xyz = _NonJitteredVP[3].xyw * r0.www + r0.xyz;
+
+// Current frame?
+r0.x += s.x * (r0.z - s.y);
+
   r0.xy = r0.xy / r0.zz;
   r0.xy = float2(1,1) + r0.xy;
   r0.x = 0.5 * r0.x;

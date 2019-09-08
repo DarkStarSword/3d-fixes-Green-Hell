@@ -9,6 +9,7 @@ Fixed
 - Accurate specular reflections
 - God rays
 - Adds a crosshair adjustment
+- Temporal AA & motion blur
 
 Installation
 ------------
