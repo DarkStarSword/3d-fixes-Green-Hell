@@ -1,5 +1,6 @@
 // Depth buffer copied from other shaders to this input with 3Dmigoto:
 Texture2D<float4> ZBuffer : register(t110);
+Texture2D<float4> ZBuffer1px : register(t111);
 
 #include "unity_cbuffers.hlsl"
 cbuffer UnityPerCamera : register(b13)
@@ -168,4 +169,14 @@ float adjust_from_stereo2mono_depth_buffer(float x, float y)
 	}
 
 	return old_offset * -stereo.z;
+}
+
+float adjust_from_1px_depth_buffer()
+{
+	float4 stereo = StereoParams.Load(0);
+	float separation = stereo.x; float convergence = stereo.y;
+
+	float z = ZBuffer1px.Load(0).x;
+	float w = z_to_w(z);
+	return separation * (w - convergence) / w;
 }

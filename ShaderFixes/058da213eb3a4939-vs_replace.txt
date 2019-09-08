@@ -96,10 +96,11 @@ void main(
   o2.xy = v2.xy * _MainTex_ST.xy + _MainTex_ST.zw;
   o3.xyzw = v0.xyzw;
 
-//if (!cursor_showing) {
-	// To start with, adjust entire HUD to crosshair depth:
-	o0.x += adjust_from_depth_buffer(0, 0) * o0.w;
-//k}
+// Crosshair depth:
+//o0.x += adjust_from_depth_buffer(0, 0) * o0.w;
+
+// HUD depth:
+o0.x += adjust_from_1px_depth_buffer() * o0.w;
 
   return;
 }

@@ -79,7 +79,9 @@ void main(out vs2ps output, uint vertex : SV_VertexID)
 	// could automatically adjust it from the depth buffer:
 	//float2 mouse_pos = (cursor_window / window_size * 2 - 1);
 	//output.pos.x += adjust_from_depth_buffer(mouse_pos.x, mouse_pos.y);
-	output.pos.x += adjust_from_depth_buffer(0, 0);
+	//output.pos.x += adjust_from_depth_buffer(0, 0);
+	// HUD depth:
+	output.pos.x += adjust_from_1px_depth_buffer();
 }
 #endif /* VERTEX_SHADER */
 
