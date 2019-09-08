@@ -1,4 +1,8 @@
 // HUD / crosshair
+
+#define rt_size IniParams[1].xy
+#define res_size IniParams[1].zw
+
 // 3DMigoto: 058da213eb3a4939 | Matched 4 variants of 1 shaders: UI/Default
 //
 //       Unity headers extracted from UI_Default
@@ -98,6 +102,10 @@ void main(
 
 // Full screen detection:
 if (all(abs(o0.xy) >= o0.w * 0.99))
+	return;
+
+// Render target size filtering:
+if (any(rt_size != res_size))
 	return;
 
 // Crosshair depth:
