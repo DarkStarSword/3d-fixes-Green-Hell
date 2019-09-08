@@ -16,6 +16,8 @@ struct vs2ps {
 };
 
 #ifdef VERTEX_SHADER
+#include "crosshair.hlsl"
+
 void main(out vs2ps output, uint vertex : SV_VertexID)
 {
 	uint mask_width, mask_height;
@@ -77,6 +79,7 @@ void main(out vs2ps output, uint vertex : SV_VertexID)
 	// could automatically adjust it from the depth buffer:
 	//float2 mouse_pos = (cursor_window / window_size * 2 - 1);
 	//output.pos.x += adjust_from_depth_buffer(mouse_pos.x, mouse_pos.y);
+	output.pos.x += adjust_from_depth_buffer(0, 0);
 }
 #endif /* VERTEX_SHADER */
 
@@ -129,8 +132,8 @@ float4 draw_cursor_color(float2 texcoord, float2 dimensions)
 	// Format=DXGI_FORMAT_B8G8R8X8_UNORM_SRGB to indicate there is no alpha
 	// channel, which will cause the read here to return 1 for opaque.
 
-	if (!result.w)
-		result.w = 1;
+	//if (!result.w)
+	//	result.w = 1;
 
 	if (mask)
 		result.w = 0;
