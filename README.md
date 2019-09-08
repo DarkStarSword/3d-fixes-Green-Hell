@@ -10,7 +10,6 @@ Fixed
 
 Still Broken
 ------------
-- 3728b8e420e2bcbf e9f2b6b3a08bd7d3 Hidden/Time of Day/Scattering (+ ambient occlusion?)
 - God rays
 
 Installation

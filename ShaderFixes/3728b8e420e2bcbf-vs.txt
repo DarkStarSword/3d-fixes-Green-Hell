@@ -1,4 +1,3 @@
-// asmtool.py -I ../.. --auto-fix-vertex-halo --fix-unusual-halo-with-inconsistent-w-optimisation --fix-unity-reflection --fix-unity-frustum-world --only-autofixed 3728b8e420e2bcbf-vs.txt
 // 3DMigoto: 3728b8e420e2bcbf | Matched 4 variants of 1 shaders: Hidden/Time of Day/Scattering
 //
 //       Unity headers extracted from Hidden_Time of Day_Scattering
@@ -73,7 +72,7 @@ dcl_immediateConstantBuffer { { 1.000000, 0, 0, 0},
                               { 0, 1.000000, 0, 0},
                               { 0, 0, 1.000000, 0},
                               { 0, 0, 0, 1.000000} }
-dcl_constantbuffer cb0[47], immediateIndexed
+dcl_constantbuffer cb0[46], immediateIndexed
 dcl_constantbuffer cb1[7], immediateIndexed
 dcl_constantbuffer cb2[4], immediateIndexed
 dcl_constantbuffer cb3[21], immediateIndexed
@@ -85,29 +84,7 @@ dcl_output o1.zw
 dcl_output o2.xy
 dcl_output o3.xyz
 dcl_output o4.xyz
-dcl_temps 9
-dcl_constantbuffer cb10[4], immediateIndexed
-dcl_constantbuffer cb13[9], immediateIndexed
-
-// 3DMigoto StereoParams:
-dcl_resource_texture2d (float,float,float,float) t125
-
-ld_indexable(texture2d)(float,float,float,float) r2.xyzw, l(0, 0, 0, 0), t125.xyzw
-
-
-// Unity _FrustumCornersWS fix inserted with DarkStarSword's asmtool.py:
-// asmtool.py -I ../.. --auto-fix-vertex-halo --fix-unusual-halo-with-inconsistent-w-optimisation --fix-unity-reflection --fix-unity-frustum-world --only-autofixed 3728b8e420e2bcbf-vs.txt
-
-add r6.x, cb13[7].z, cb13[7].w
-rcp r6.x, r6.x
-add r7.x, r6.x, -r2.y
-mul r7.x, r2.x, r7.x
-mul r8.xyzw, cb10[0].xyzw, r7.xxxx
-// GOTCHA: _FrustumCornersWS is TRANSPOSED vs DX9!
-add r3.xyzw, cb0[41].xyzw, -r8.xxxx
-add r4.xyzw, cb0[42].xyzw, -r8.yyyy
-add r5.xyzw, cb0[43].xyzw, -r8.zzzz
-
+dcl_temps 2
 mul r0.xyzw, v0.yyyy, cb2[1].xyzw
 mad r0.xyzw, cb2[0].xyzw, v0.xxxx, r0.xyzw
 mad r0.xyzw, cb2[2].xyzw, l(0.100000, 0.100000, 0.100000, 0.100000), r0.xyzw
@@ -123,9 +100,9 @@ mov o1.xzw, v1.xxxy
 mul r0.xy, v1.xyxx, cb1[6].xyxx
 mul o2.xy, r0.xyxx, l(0.125000, 0.125000, 0.000000, 0.000000)
 ftoi r0.x, v0.z
-dp4 r1.x, r3.xyzw, icb[r0.x + 0].xyzw
-dp4 r1.y, r4.xyzw, icb[r0.x + 0].xyzw
-dp4 r1.z, r5.xyzw, icb[r0.x + 0].xyzw
+dp4 r1.x, cb0[41].xyzw, icb[r0.x + 0].xyzw
+dp4 r1.y, cb0[42].xyzw, icb[r0.x + 0].xyzw
+dp4 r1.z, cb0[43].xyzw, icb[r0.x + 0].xyzw
 mov o3.xyz, r1.xyzx
 mul r0.xyz, r1.yyyy, cb0[3].xyzx
 mad r0.xyz, cb0[2].xyzx, r1.xxxx, r0.xyzx
