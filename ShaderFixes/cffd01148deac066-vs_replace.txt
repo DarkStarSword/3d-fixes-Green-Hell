@@ -1,0 +1,83 @@
+// 3DMigoto: cffd01148deac066 |    Unity headers extracted from Hidden_Time of Day_God Rays
+//    Shader "Hidden/Time of Day/God Rays" {
+//      SubShader 1/1 {
+//        Pass 2/5 {
+//          ZWrite Off
+//          Program "vp" {
+//            SubProgram "d3d11" {
+//            }
+//          }
+//        }
+//      }
+//    }
+//
+// Unity 5.3 headers extracted from Hidden_Time of Day_God Rays:
+//   API d3d11
+//   Shader model vs_4_0
+//   undeciphered1: 201802150 10 0 0
+//   undeciphered1a: 2
+//   undeciphered2: 1 0 3 0 0 0
+//   undeciphered3: 17 2 0 0 4 5
+//   ConstBuffer "$Globals" 96
+//   Vector 48 [_BlurRadius4]
+//   Vector 64 [_LightPosition]
+//   ConstBuffer "UnityPerDraw" 176
+//   Matrix 0 [unity_ObjectToWorld]
+//   ConstBuffer "UnityPerFrame" 368
+//   Matrix 272 [unity_MatrixVP]
+//   BindCB "$Globals" 0
+//   BindCB "UnityPerDraw" 1
+//   BindCB "UnityPerFrame" 2
+//
+// Headers extracted with DarkStarSword's extract_unity55_shaders.py
+// https://github.com/DarkStarSword/3d-fixes
+
+// ---- Created with 3Dmigoto v1.3.16 on Sat Sep 07 10:13:18 2019
+
+// Unity constant buffers reconstructed with DarkStarSword's hlsltool.py:
+// hlsltool.py --reconstruct-unity-cbuffers -I /home/dss/3d-fixes/Green Hell/ --fxc /home/dss/fxc.exe -f cffd01148deac066-vs_replace.txt
+
+cbuffer UnityPerFrame : register(b2) {
+  row_major matrix unity_MatrixVP : packoffset(c17);
+}
+
+cbuffer UnityPerDraw : register(b1) {
+  row_major matrix unity_ObjectToWorld : packoffset(c0);
+}
+
+cbuffer Globals : register(b0) {
+  float4 _BlurRadius4 : packoffset(c3);
+  float4 _LightPosition : packoffset(c4);
+}
+
+
+
+
+// 3Dmigoto declarations
+#define cmp -
+
+
+void main(
+  float4 v0 : POSITION0,
+  float2 v1 : TEXCOORD0,
+  out float4 o0 : SV_POSITION0,
+  out float2 o1 : TEXCOORD0,
+  out float2 p1 : TEXCOORD1)
+{
+  float4 r0,r1;
+  uint4 bitmask, uiDest;
+  float4 fDest;
+
+  r0.xyzw = unity_ObjectToWorld[1].xyzw * v0.yyyy;
+  r0.xyzw = unity_ObjectToWorld[0].xyzw * v0.xxxx + r0.xyzw;
+  r0.xyzw = unity_ObjectToWorld[2].xyzw * v0.zzzz + r0.xyzw;
+  r0.xyzw = unity_ObjectToWorld[3].xyzw + r0.xyzw;
+  r1.xyzw = unity_MatrixVP[1].xyzw * r0.yyyy;
+  r1.xyzw = unity_MatrixVP[0].xyzw * r0.xxxx + r1.xyzw;
+  r1.xyzw = unity_MatrixVP[2].xyzw * r0.zzzz + r1.xyzw;
+  o0.xyzw = unity_MatrixVP[3].xyzw * r0.wwww + r1.xyzw;
+  r0.xy = _LightPosition.xy + -v1.xy;
+  p1.xy = _BlurRadius4.xy * r0.xy;
+  o1.xy = v1.xy;
+  return;
+}

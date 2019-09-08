@@ -1,0 +1,84 @@
+// 3DMigoto: f3dcc3d83e315004 |    Unity headers extracted from Hidden_Time of Day_God Rays
+//    Shader "Hidden/Time of Day/God Rays" {
+//      SubShader 1/1 {
+//        Pass 3/5 {
+//          ZWrite Off
+//          Program "fp" {
+//            SubProgram "d3d11" {
+//            }
+//          }
+//        }
+//      }
+//    }
+//
+// Unity 5.3 headers extracted from Hidden_Time of Day_God Rays:
+//   API d3d11
+//   Shader model ps_4_0
+//   undeciphered1: 201802150 10 2 0
+//   undeciphered1a: 2
+//   undeciphered2: 1 2 2 2 0 0
+//   undeciphered3: 0 0
+//   ConstBuffer "$Globals" 96
+//   Vector 64 [_LightPosition]
+//   ConstBuffer "UnityPerCamera" 144
+//   Vector 112 [_ZBufferParams]
+//   SetTexture 0 [_MainTex] 2D 0
+//   SetTexture 1 [_CameraDepthTexture] 2D 1
+//   BindCB "$Globals" 0
+//   BindCB "UnityPerCamera" 1
+//
+// Headers extracted with DarkStarSword's extract_unity55_shaders.py
+// https://github.com/DarkStarSword/3d-fixes
+
+// ---- Created with 3Dmigoto v1.3.16 on Sat Sep 07 10:30:05 2019
+Texture2D<float4> t1 : register(t1);
+
+Texture2D<float4> t0 : register(t0);
+
+SamplerState s1_s : register(s1);
+
+SamplerState s0_s : register(s0);
+
+
+// Unity constant buffers reconstructed with DarkStarSword's hlsltool.py:
+// hlsltool.py --reconstruct-unity-cbuffers -I /home/dss/3d-fixes/Green Hell/ --fxc /home/dss/fxc.exe -f f3dcc3d83e315004-ps_replace.txt
+
+cbuffer UnityPerCamera : register(b1) {
+  float4 _ZBufferParams : packoffset(c7);
+}
+
+cbuffer Globals : register(b0) {
+  float4 _LightPosition : packoffset(c4);
+}
+
+
+
+
+// 3Dmigoto declarations
+#define cmp -
+
+
+void main(
+  float4 v0 : SV_POSITION0,
+  float2 v1 : TEXCOORD0,
+  float2 w1 : TEXCOORD1,
+  out float4 o0 : SV_Target0)
+{
+  float4 r0,r1;
+  uint4 bitmask, uiDest;
+  float4 fDest;
+
+  r0.xy = _LightPosition.xy + -w1.xy;
+  r0.x = dot(r0.xy, r0.xy);
+  r0.x = sqrt(r0.x);
+  r0.x = saturate(_LightPosition.w + -r0.x);
+  r1.xyzw = t0.Sample(s0_s, v1.xy).xyzw;
+  r0.y = 1.00999999 + -r1.w;
+  r0.x = r0.y * r0.x;
+  r1.xyzw = t1.Sample(s1_s, w1.xy).xyzw;
+  r0.y = _ZBufferParams.x * r1.x + _ZBufferParams.y;
+  r0.y = 1 / r0.y;
+  r0.y = cmp(0.99000001 < r0.y);
+  o0.xyzw = r0.yyyy ? r0.xxxx : 0;
+  return;
+}
