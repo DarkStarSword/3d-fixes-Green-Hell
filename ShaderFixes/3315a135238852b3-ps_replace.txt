@@ -1,0 +1,106 @@
+// 3DMigoto: 3315a135238852b3 |    Unity headers extracted from Hidden_Internal-MotionVectors
+//    Shader "Hidden/Internal-MotionVectors" {
+//      SubShader 1/1 {
+//        Pass 2/3 {
+//          ZWrite Off
+//          Program "fp" {
+//            SubProgram "d3d11" {
+//            }
+//          }
+//        }
+//      }
+//    }
+//
+// Unity 5.3 headers extracted from Hidden_Internal-MotionVectors:
+//   API d3d11
+//   Shader model ps_4_0
+//   undeciphered1: 201802150 26 1 0
+//   undeciphered1a: 3
+//   undeciphered2: 1 1 3 1 0 0
+//   undeciphered3: 0 0
+//   ConstBuffer "$Globals" 240
+//   Matrix 32 [_NonJitteredVP]
+//   Matrix 96 [_PreviousVP]
+//   ConstBuffer "UnityPerCamera" 144
+//   Vector 80 [_ProjectionParams]
+//   Vector 112 [_ZBufferParams]
+//   ConstBuffer "UnityPerCameraRare" 352
+//   Matrix 288 [unity_CameraToWorld]
+//   SetTexture 0 [_CameraDepthTexture] 2D 0
+//   BindCB "$Globals" 0
+//   BindCB "UnityPerCamera" 1
+//   BindCB "UnityPerCameraRare" 2
+//
+// Headers extracted with DarkStarSword's extract_unity55_shaders.py
+// https://github.com/DarkStarSword/3d-fixes
+
+// ---- Created with 3Dmigoto v1.3.16 on Sat Sep 07 08:47:20 2019
+Texture2D<float4> t0 : register(t0);
+
+SamplerState s0_s : register(s0);
+
+
+// Unity constant buffers reconstructed with DarkStarSword's hlsltool.py:
+// hlsltool.py --reconstruct-unity-cbuffers -I /home/dss/3d-fixes/Green Hell/ --fxc /home/dss/fxc.exe -f 3315a135238852b3-ps_replace.txt
+
+cbuffer UnityPerCameraRare : register(b2) {
+  row_major matrix unity_CameraToWorld : packoffset(c18);
+}
+
+cbuffer UnityPerCamera : register(b1) {
+  float4 _ProjectionParams : packoffset(c5);
+  float4 _ZBufferParams : packoffset(c7);
+}
+
+cbuffer Globals : register(b0) {
+  row_major matrix _NonJitteredVP : packoffset(c2);
+  row_major matrix _PreviousVP : packoffset(c6);
+}
+
+
+
+
+// 3Dmigoto declarations
+#define cmp -
+
+
+void main(
+  float4 v0 : SV_POSITION0,
+  float4 v1 : TEXCOORD0,
+  float3 v2 : TEXCOORD1,
+  out float4 o0 : SV_Target0)
+{
+  float4 r0,r1,r2;
+  uint4 bitmask, uiDest;
+  float4 fDest;
+
+  r0.xyzw = t0.Sample(s0_s, v1.xy).xyzw;
+  r0.x = _ZBufferParams.x * r0.x + _ZBufferParams.y;
+  r0.x = 1 / r0.x;
+  r0.y = _ProjectionParams.z / v2.z;
+  r0.yzw = v2.xyz * r0.yyy;
+  r0.xyz = r0.yzw * r0.xxx;
+  r1.xyzw = unity_CameraToWorld[1].xyzw * r0.yyyy;
+  r1.xyzw = unity_CameraToWorld[0].xyzw * r0.xxxx + r1.xyzw;
+  r0.xyzw = unity_CameraToWorld[2].xyzw * r0.zzzz + r1.xyzw;
+  r0.xyzw = unity_CameraToWorld[3].xyzw + r0.xyzw;
+  r1.xyz = _PreviousVP[1].xyw * r0.yyy;
+  r1.xyz = _PreviousVP[0].xyw * r0.xxx + r1.xyz;
+  r1.xyz = _PreviousVP[2].xyw * r0.zzz + r1.xyz;
+  r1.xyz = _PreviousVP[3].xyw * r0.www + r1.xyz;
+  r1.xy = r1.xy / r1.zz;
+  r1.xy = float2(1,1) + r1.xy;
+  r1.x = 0.5 * r1.x;
+  r1.z = -r1.y * 0.5 + 1;
+  r2.xyz = _NonJitteredVP[1].xyw * r0.yyy;
+  r2.xyz = _NonJitteredVP[0].xyw * r0.xxx + r2.xyz;
+  r0.xyz = _NonJitteredVP[2].xyw * r0.zzz + r2.xyz;
+  r0.xyz = _NonJitteredVP[3].xyw * r0.www + r0.xyz;
+  r0.xy = r0.xy / r0.zz;
+  r0.xy = float2(1,1) + r0.xy;
+  r0.x = 0.5 * r0.x;
+  r0.z = -r0.y * 0.5 + 1;
+  o0.xy = r0.xz + -r1.xz;
+  o0.zw = float2(0,1);
+  return;
+}
