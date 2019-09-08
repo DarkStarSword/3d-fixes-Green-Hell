@@ -11,6 +11,11 @@ Fixed
 - Adds a crosshair adjustment
 - Temporal AA & motion blur
 
+Keys
+----
+x: Toggle crosshair
+\: Set recommended convergence preset
+
 Installation
 ------------
 
